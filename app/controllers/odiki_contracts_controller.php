@@ -134,9 +134,13 @@
 			$this->set('vehicles', $vehicles);
 		}
 		
-		function statistics()
+		function statistics($companyId=-1)
 		{
-			$contracts = $this->OdikiContract->find('all');
+			if ($companyId!=-1)
+				$contracts = $this->OdikiContract->find('all', array('conditions' => array('OdikiContract.company_id =' => $companyId)));
+			else
+				$contracts = $this->OdikiContract->find('all');
+				
 			$paidContracts = 0; $paidSum = 0;
 			$unpaidContracts = 0; $unpaidSum = 0;
 			foreach ($contracts as $contract)
@@ -155,7 +159,11 @@
 			$this->set("paidContracts", $paidContracts);
 			$this->set("paidSum", $paidSum);
 			$this->set("unpaidContracts", $unpaidContracts);
-			$this->set("unpaidSum", $unpaidSum);			
+			$this->set("unpaidSum", $unpaidSum);
+			$company=null;
+			if ($companyId!=-1)
+				$company = $this->requestAction("/odikiCompanies/get/" . $companyId);
+			$this->set("company", $company);			
 		}
 	}
 ?>

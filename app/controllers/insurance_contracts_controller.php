@@ -158,9 +158,13 @@
 			$this->set('contracts', $contracts);
 			$this->set('vehicles', $vehicles);
 		}
-		function statistics()
+		function statistics($companyId=-1)
 		{
-			$contracts = $this->InsuranceContract->find('all');
+			if ($companyId!=-1)
+				$contracts = $this->InsuranceContract->find('all', array('conditions' => array('InsuranceContract.company_id =' => $companyId)));
+			else
+				$contracts = $this->InsuranceContract->find('all');
+				
 			$paidContracts = 0; $paidSum = 0;
 			$unpaidContracts = 0; $unpaidSum = 0;
 			foreach ($contracts as $contract)
@@ -179,7 +183,11 @@
 			$this->set("paidContracts", $paidContracts);
 			$this->set("paidSum", $paidSum);
 			$this->set("unpaidContracts", $unpaidContracts);
-			$this->set("unpaidSum", $unpaidSum);			
+			$this->set("unpaidSum", $unpaidSum);	
+			$company=null;
+			if ($companyId!=-1)
+				$company = $this->requestAction("/insuranceCompanies/get/" . $companyId);
+			$this->set("company", $company);
 		}		
 	}
 ?>

@@ -5,6 +5,7 @@
 	<div class="post_body">
 		<p>Στατιστικά Συμβολαίων:</p>
 		<ul>
+			<li><?php echo $html->link("Οχημάτων","/vehicles/statistics"); ?></li>
 			<li><?php echo $html->link("Ασφάλειας","/insuranceContracts/statistics"); ?></li>
 			<li><?php echo $html->link("Οδικής Βοήθειας","/odikiContracts/statistics"); ?></li>
 		</ul>

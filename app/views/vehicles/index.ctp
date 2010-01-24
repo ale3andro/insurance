@@ -4,9 +4,14 @@
 	<div class="post_title"><h2>Όλα τα Οχήματα</h2></div>
 	<div class="post_body">
 		<?php
-			echo $this->element("vehiclesList", array("vehicles" => $theVehicles));					
-			echo $paginator->counter(array('format' => 'Σελίδα %page% από %pages%')) . "<br />";
-			echo $paginator->numbers();
+			if (count($theVehicles!=0))
+			{
+				echo $this->element("vehiclesList", array("vehicles" => $theVehicles));					
+				echo $paginator->counter(array('format' => 'Σελίδα %page% από %pages%')) . "<br />";
+				echo $paginator->numbers();
+			}
+			else
+				echo "Δεν υπάρχουν καταχωρημένα οχήματα!!";
 		?>		
 	</div>
 </div>

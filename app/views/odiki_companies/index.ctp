@@ -5,16 +5,21 @@
 	<div class="post_body">
 		<p>Συνεργαζόμαστε με τις παρακάτω εταιρίες:</p>
 		<?php
-			$i=0;
-			echo "<ul>";
-			foreach ($theFirms as $firm)
-				echo "<li>" . $html->link($firm['OdikiCompany']['description'], 
+			if (count($theFirms)!=0)
+			{
+				echo "<ul>";
+				foreach ($theFirms as $firm)
+					echo "<li>" .$firm['OdikiCompany']['description'] . ": " . $html->link("Συμβόλαια", 
 							"/vehicles/getFromOdikiCompanyId/" . $firm['OdikiCompany']['id']) . " - " . 
 							$html->link("Προβολή Στοιχείων Εταιρίας", 
 							"/odikiCompanies/view/" . $firm['OdikiCompany']['id']) ."</li>";
-			echo "</ul>";
-			echo $paginator->counter(array('format' => 'Σελίδα %page% από %pages%')) . "<br />";
-			echo $paginator->numbers();
+				echo "</ul>";
+			
+				echo $paginator->counter(array('format' => 'Σελίδα %page% από %pages%')) . "<br />";
+				echo $paginator->numbers();
+			}
+			else
+				echo "Δεν υπάρχουν καταχωρημένες εταιρίες Οδικής Βοήθειας";
 			
 			echo "<br /><br /><p>" . $html->link("Προσθήκη Εταιρίας Οδικής Ασφάλειας", "/odikiCompanies/add") . "</p>";
 		?>		

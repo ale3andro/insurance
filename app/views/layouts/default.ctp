@@ -57,6 +57,7 @@
 						<li><?php echo $html->link("Όλα τα οχήματα", "/vehicles"); ?></li>
 						<li><?php echo $html->link("Προσθήκη οχήματος", "/vehicles/add"); ?></li>
 						<li><?php echo $html->link("Αναζήτηση οχήματος", "/vehicles/search"); ?></li>
+						<li><?php echo $html->link("Συνολικά Στατιστικά", "/vehicles/statistics"); ?></li>
 					</ul>
 
 				</div>
@@ -73,6 +74,7 @@
 						<li><?php echo $html->link("Λήγουν την επόμενη εβδομάδα", "/vehicles/getInsuranceContractsDue/7"); ?></li>
 						<li><?php echo $html->link("Λήγουν τον επόμενο μήνα", "/vehicles/getInsuranceContractsDue/30"); ?></li>
 						<li><?php echo $html->link("Ανά Εταιρία", "/insuranceCompanies"); ?></li>
+						<li><?php echo $html->link("Συνολικά Στατιστικά", "/insuranceContracts/statistics"); ?></li>
 					</ul>
 
 				</div>
@@ -89,6 +91,7 @@
 						<li><?php echo $html->link("Λήγουν την επόμενη εβδομάδα", "/vehicles/getOdikiContractsDue/7"); ?></li>
 						<li><?php echo $html->link("Λήγουν τον επόμενο μήνα", "/vehicles/getOdikiContractsDue/30"); ?></li>
 						<li><?php echo $html->link("Ανά Εταιρία", "/odikiCompanies"); ?></li>
+						<li><?php echo $html->link("Συνολικά Στατιστικά", "/odikiContracts/statistics"); ?></li>
 					</ul>
 
 				</div>

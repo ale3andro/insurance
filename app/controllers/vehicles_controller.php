@@ -24,15 +24,22 @@
 		function getFromInsuranceCompanyId($insuranceCompanyId=-1)
 		{
 			$contracts = $this->requestAction("/insuranceContracts/byCompany/" . $insuranceCompanyId);	
-			foreach ($contracts as $contract)
-				$contractIds[] = $contract['InsuranceContract']['id'];
+			if (count($contracts)!=0)
+			{
+				foreach ($contracts as $contract)
+					$contractIds[] = $contract['InsuranceContract']['id'];
 			
-			$conditions['Vehicle.insurance_contract_id'] = $contractIds;
+				$conditions['Vehicle.insurance_contract_id'] = $contractIds;
+				$vehicles = $this->paginate('Vehicle', $conditions);
+			}
+			else
+				$vehicles=null;
+				
 			if ($insuranceCompanyId!=-1)
 				$company = $this->requestAction("insuranceCompanies/get/" . $insuranceCompanyId);
 			else
 				$company = null;
-			$this->set("theVehicles", $this->paginate('Vehicle', $conditions));
+			$this->set("theVehicles", $vehicles);
 			$this->set("company", $company);
 		}
 		function getInsuranceContractsDue($numDays)
@@ -62,15 +69,21 @@
 		function getFromOdikiCompanyId($odikiCompanyId=-1)
 		{
 			$contracts = $this->requestAction("/odikiContracts/byCompany/" . $odikiCompanyId);	
-			foreach ($contracts as $contract)
-				$contractIds[] = $contract['OdikiContract']['id'];
+			if (count($contracts)!=0)
+			{
+				foreach ($contracts as $contract)
+					$contractIds[] = $contract['OdikiContract']['id'];
 			
-			$conditions['Vehicle.odiki_contract_id'] = $contractIds;
-			if ($odikiCompanyId!=-1)
-				$company = $this->requestAction("odikiCompanies/get/" . $odikiCompanyId);
+				$conditions['Vehicle.odiki_contract_id'] = $contractIds;
+				$vehicles = $this->paginate('Vehicle', $conditions);
+			}
 			else
-				$company = null;
-			$this->set("theVehicles", $this->paginate('Vehicle', $conditions));
+				$vehicles=null;
+				if ($odikiCompanyId!=-1)
+					$company = $this->requestAction("odikiCompanies/get/" . $odikiCompanyId);
+				else
+					$company = null;
+			$this->set("theVehicles", $vehicles);
 			$this->set("company", $company);		
 		}
 		function getOdikiContractsDue($numDays)
@@ -194,52 +207,26 @@
 		
 		function backup()
 		{
-			$allContracts = $this->Contract->find('all');
-			$allCompanies = $this->requestAction("/companies/");
+			//TODO	
 			
-			$fileName = "backup" . date('o-m-d') . ".sql";
-			
-			$text = 'SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-						CREATE DATABASE `insurance` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-						USE `insurance`;
-
-					CREATE TABLE IF NOT EXISTS `companies` (`id` int(11) NOT NULL auto_increment, `description` varchar(80) NOT NULL, 
-						`telephone` varchar(10) NOT NULL, PRIMARY KEY  (`id`) ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;';
-			
-			$text .= 'INSERT INTO `companies` (`id`, `description`, `telephone`) VALUES ';
-			
-			$i=0;
-			foreach ($allCompanies as $company)
+		}
+		function statistics()
+		{
+			$vehicles = $this->Vehicle->find("all");
+			$num=0; 
+			$numInsured=0; 
+			$numOdiki=0;
+			foreach ($vehicles as $vehicle)
 			{
-				$i++;
-				$text .= '(' . $company['Company']['id'] . ', "' . $company['Company']['description'] . '", "' . 
-								$company['Company']['telephone'] . '")' . (( $i==count($allCompanies) )?';':', ');
+				$num++;
+				if ($vehicle['Vehicle']['insurance_contract_id']!=0)
+					$numInsured++;
+				if ($vehicle['Vehicle']['odiki_contract_id']!=0)
+					$numOdiki++;
 			}
-			
-			$text .= 'CREATE TABLE IF NOT EXISTS `contracts` (`id` int(11) NOT NULL auto_increment, `firstName` varchar(40) NOT NULL, `lastName` varchar(40) NOT NULL,
-							`fatherName` varchar(50) NOT NULL, `plate` varchar(7) NOT NULL, `from` date NOT NULL, `to` date NOT NULL, `amount` float NOT NULL,
-							`companyId` int(11) NOT NULL, `isPaid` int(11) NOT NULL, PRIMARY KEY  (`id`) ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC 
-							AUTO_INCREMENT=10 ;';
-			$text .= 'INSERT INTO `contracts` (`id`, `firstName`, `lastName`, `fatherName`, `plate`, `from`, `to`, `amount`, `companyId`, `isPaid`) VALUES ';
-			
-			$i=0;
-			foreach($allContracts as $contract)
-			{
-				$i++;
-				$text .= '(' . $contract['Contract']['id'] . ', "' . $contract['Contract']['firstName'] . '", "' . 
-								$contract['Contract']['lastName'] . '", "' . $contract['Contract']['fatherName'] . '", "' .
-								$contract['Contract']['plate'] . '", "' . $contract['Contract']['from'] . '", "' .
-								$contract['Contract']['to'] . '", ' . $contract['Contract']['amount'] . ', ' . 
-								$contract['Contract']['companyId'] . ', ' . $contract['Contract']['isPaid'] . ')' . 
-								(( $i==count($allContracts) )?';':', ');
-			}			
-			
-			header('Content-type: application/txt');
-			header('Content-Disposition: attachment; filename="' . $fileName . '"');
-			echo $text;
-			exit();
-			//$this->set("title", "Backup Βάσης Δεδομένων Εφαρμογής");			
-			
+			$this->set('num', $num);
+			$this->set('numInsured', $numInsured);
+			$this->set('numOdiki', $numOdiki);
 		}
 	}
 ?>

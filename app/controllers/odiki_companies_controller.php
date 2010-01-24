@@ -53,20 +53,7 @@
 		function view($id)
 		{
 			$company = $this->OdikiCompany->findById($id);
-			$this->set('title', $company['OdikiCompany']['description']);
 			$this->set('company', $company);
-			$contracts = $this->requestAction("/odikiContracts/byCompany/" . $id);
-			if (count($contracts) != 0)
-			{
-				$i=0;
-				foreach ($contracts as $contract)
-					$vehicles[$i++] = $this->requestAction("/vehicles/getFromOdikiId/" . $contract['OdikiContract']['id']);
-			}
-			else
-				$vehicles = null;
-			
-			$this->set('vehicles', $vehicles);
-			$this->set('contracts', $contracts);
 		}
 		function createSelect($selectedId=-1)
 		{

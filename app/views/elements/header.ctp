@@ -5,7 +5,7 @@
 			<div id="toplinks_inner">
 				<a href="<?php echo $html->webroot ?>">Αρχική</a> | 
 				<?php echo $html->link("Συν. Στατιστικά", "/statistics"); ?> | 
-				<?php echo $html->link("Backup", "/contracts/backup"); ?>
+				<?php echo $html->link("Backup", "/vehicles/backup"); ?>
 			</div>
 		</div>
 		<div class="clearer">&nbsp;</div>
