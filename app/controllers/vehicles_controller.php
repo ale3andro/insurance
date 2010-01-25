@@ -168,7 +168,7 @@
 		}
 		
 		/* fixed */
-		function search()
+		function search() /* ok */
 		{
 			$this->set("title", "Αναζήτηση");
 			if (!empty($this->data))
@@ -183,11 +183,15 @@
 					$conditions['Vehicle.plate LIKE'] = $this->data['Vehicle']['plate'] . "%";
 				$this->set("vehicles", $this->paginate('Vehicle', $conditions));
 			}
-			
 		}
 		/* fixed */
-		function edit($id)
+		function edit($id) /* ok */
 		{
+			if (!isset($id))
+				$this->cakeError('error404');
+			if ($this->Vehicle->findById($id)==null)
+				$this->cakeError('error404');
+			
 			$this->pageTitle = "Διόρθωση Στοιχείων Οχήματος";
 			$this->Contract->id = $id;
 			
@@ -203,7 +207,7 @@
 			}
 		}
 		
-		function add()
+		function add() /* ok */
 		{
 			$this->pageTitle = "Προσθήκη Οχήματος";
 			
@@ -217,27 +221,44 @@
 			}
 		}
 		
-		function setOdikiContractId($vehicleId, $odikiContractId)
+		function setOdikiContractId($vehicleId, $odikiContractId) /* ok */
 		{
-			$this->data = $this->Vehicle->findById($vehicleId);
-			$this->data['Vehicle']['odiki_contract_id'] = $odikiContractId;
-			$this->Vehicle->save($this->data);
-			
+			if (isset($this->params['requested']))
+			{
+				$this->data = $this->Vehicle->findById($vehicleId);
+				if ($this->data==null)
+					$this->cakeError('error404');
+				$this->data['Vehicle']['odiki_contract_id'] = $odikiContractId;
+				$this->Vehicle->save($this->data);
+			}
+			else
+				$this->cakeError('error404');			
 		}
 		
-		function setInsuranceContractId($vehicleId, $insuranceContractId)
+		function setInsuranceContractId($vehicleId, $insuranceContractId) /* ok */
 		{
-			$this->data = $this->Vehicle->findById($vehicleId);
-			$this->data['Vehicle']['insurance_contract_id'] = $insuranceContractId;
-			$this->Vehicle->save($this->data);
-			
+			if (isset($this->params['requested']))
+			{
+				$this->data = $this->Vehicle->findById($vehicleId);
+				if ($this->data==null)
+					$this->cakeError('error404');
+				$this->data['Vehicle']['insurance_contract_id'] = $insuranceContractId;
+				$this->Vehicle->save($this->data);
+			}
+			else
+				$this->cakeError('error404');
 		}
 		
 		/* fixed */
-		function view($id)
+		function view($id) /* ok */
 		{
-			$this->pageTitle = "Προβολή Λεπτομερειών οχήματος";
+			if (!isset($id))
+				$this->cakeError('error404');
+				
 			$vehicle = $this->Vehicle->findById($id);
+			if ($vehicle==null)
+				$this->cakeError('error404');
+			
 			$insuranceContract = $this->requestAction("/insuranceContracts/get/" . 
 						$vehicle['Vehicle']['insurance_contract_id']);
 			$odikiContract = $this->requestAction("/odikiContracts/get/" . 
@@ -260,7 +281,7 @@
 			//TODO	
 			
 		}
-		function statistics()
+		function statistics() /* ok */
 		{
 			$vehicles = $this->Vehicle->find("all");
 			$num=0; 

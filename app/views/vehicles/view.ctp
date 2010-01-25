@@ -1,7 +1,11 @@
 <!-- File: /app/views/vehicles/view.ctp -->	
-<?php echo $this->element("header", array( "activeTab" => -1) ); ?>
+<?php 
+	echo $this->element("header", array( "activeTab" => -1) ); 
+	$title = "Προβολή λεπτομερειών οχήματος " . $vehicle['Vehicle']['plate'];
+	$this->set("title", $title);
+?>
 <div class="post">
-	<div class="post_title"><h2>Προβολή λεπτομερειών οχήματος <?php echo $vehicle['Vehicle']['plate']; ?></h2></div>
+	<div class="post_title"><h2><?php echo $title; ?></h2></div>
 	<div class="post_body">
 		<?php
 			echo "<p>Ονοματεπώνυμο: " . $vehicle['Vehicle']['first_name'] . " " . $vehicle['Vehicle']['last_name'] . "</p>";
