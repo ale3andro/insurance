@@ -5,24 +5,30 @@
 		var $paginate = array( 'limit' => 10, 'order' => array('Vehicle.last_name' => 'asc', 'Vehicle.first_name' => 'asc', 
 								'Vehicle.father_name' => 'asc', 'Vehicle.plate' => 'asc'));
 		/* fixed */
-		function index()
+		function index() /* ok */
 		{
 			$this->pageTitle = "Όλα τα Οχήματα";
 			$this->set("theVehicles", $this->paginate());	
 		}
 		
-		function get($id)
+		function get($id) /* ok */
 		{
 			if (isset($this->params['requested']))
-				return $this->Vehicle->findById($id);			
+				return $this->Vehicle->findById($id);
+			else
+				$this->cakeError('error404');
 		}
-		/* fixed */
+		/*
 		function getFromInsuranceId($insuranceId)
 		{
 			return $this->Vehicle->find("first", array( 'conditions' => array('Vehicle.insurance_contract_id =' => $insuranceId)));
 		}
-		function getFromInsuranceCompanyId($insuranceCompanyId=-1)
+		* */
+		function getFromInsuranceCompanyId($insuranceCompanyId=-1) /* ok */ 
 		{
+			if (($insuranceCompanyId!=-1) && ($this->requestAction("/insuranceCompanies/get/" . $insuranceCompanyId)==null) )
+				$this->cakeError('error404');
+			
 			$contracts = $this->requestAction("/insuranceContracts/byCompany/" . $insuranceCompanyId);	
 			if (count($contracts)!=0)
 			{
@@ -42,8 +48,28 @@
 			$this->set("theVehicles", $vehicles);
 			$this->set("company", $company);
 		}
-		function getInsuranceContractsDue($numDays)
+		function getInsuranceContractsIsPaid($status="no") /* ok */
 		{
+			$contracts = $this->requestAction("InsuranceContracts/isPaid/" . $status);
+			if (count($contracts) != 0)
+			{			
+				foreach ($contracts as $contract)
+					$contractIds[] = $contract['InsuranceContract']['id'];
+				$conditions['Vehicle.insurance_contract_id'] = $contractIds;
+				$vehicles = $this->paginate('Vehicle', $conditions);
+			}
+			else
+				$vehicles = null;
+				
+			$this->set('status', $status);
+			$this->set('contracts', $contracts);
+			$this->set('vehicles', $vehicles);
+		}
+		function getInsuranceContractsDue($numDays=7) /* ok */
+		{
+			if ($numDays<1)
+				$this->cakeError('error404');
+				
 			$contracts = $this->requestAction("/insuranceContracts/due/" . $numDays);
 			if (count($contracts) != 0)
 			{
@@ -59,15 +85,17 @@
 			$this->set("theVehicles", $vehicles);
 			$this->set("numDays", $numDays);
 		}
-		
-		
-		/* fixed */
+		/*
 		function getFromOdikiId($odikiId)
 		{
 			return $this->Vehicle->find("first", array( 'conditions' => array('Vehicle.odiki_contract_id =' => $odikiId)));
 		}
-		function getFromOdikiCompanyId($odikiCompanyId=-1)
+		*/
+		function getFromOdikiCompanyId($odikiCompanyId=-1) /* ok */
 		{
+			if ( ($odikiCompanyId!=-1) && ($this->requestAction("/odikiCompanies/get/" . $odikiCompanyId)==null) )
+				$this->cakeError('error404');
+				
 			$contracts = $this->requestAction("/odikiContracts/byCompany/" . $odikiCompanyId);	
 			if (count($contracts)!=0)
 			{
@@ -86,8 +114,28 @@
 			$this->set("theVehicles", $vehicles);
 			$this->set("company", $company);		
 		}
-		function getOdikiContractsDue($numDays)
+		function getOdikiContractsIsPaid($status="no") /* ok */
 		{
+			$contracts = $this->requestAction("OdikiContracts/isPaid/" . $status);
+			if (count($contracts) != 0)
+			{			
+				foreach ($contracts as $contract)
+					$contractIds[] = $contract['OdikiContract']['id'];
+				$conditions['Vehicle.odiki_contract_id'] = $contractIds;
+				$vehicles = $this->paginate('Vehicle', $conditions);
+			}
+			else
+				$vehicles = null;
+				
+			$this->set('status', $status);
+			$this->set('contracts', $contracts);
+			$this->set('vehicles', $vehicles);
+		}
+		function getOdikiContractsDue($numDays=7) /* ok */
+		{
+			if ($numDays<1)
+				$this->cakeError('error404');
+			
 			$contracts = $this->requestAction("/odikiContracts/due/" . $numDays);
 			if (count($contracts) != 0)
 			{
@@ -104,9 +152,11 @@
 			$this->set("numDays", $numDays);
 		}
 		
-		function delete($id)
+		function delete($id) /* ok */
 		{
 			$vehicle = $this->Vehicle->findById($id);
+			if ($vehicle==null)
+				$this->cakeError('error404');
 			
 			if ($vehicle['Vehicle']['insurance_contract_id'] != 0)
 				$this->requestAction("/insuranceContracts/delete/" . $vehicle['Vehicle']['insurance_contract_id']);

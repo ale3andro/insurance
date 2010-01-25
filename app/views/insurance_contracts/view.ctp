@@ -1,7 +1,11 @@
 <!-- file /app/views/insurance_contracts/view.ctp -->
-<?php echo $this->element("header", array( "activeTab" => -1 )); ?>
+<?php 
+	echo $this->element("header", array( "activeTab" => -1 )); 
+	$title = "Προβολή Ασφαλιστικού Συμβολαίου " . $vehicle['Vehicle']['plate'];
+	$this->set("title", $title);
+?>
 <div class="post">
-	<div class="post_title"><h2>Προβολή Ασφαλιστικού Συμβολαίου <?php echo $vehicle['Vehicle']['plate']; ?></h2></div>
+	<div class="post_title"><h2><?php echo $title; ?></h2></div>
 	<div class="post_body">
 		
 		<?php

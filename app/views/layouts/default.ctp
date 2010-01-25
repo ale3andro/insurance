@@ -69,8 +69,8 @@
 					<h4>Συμβ. Ασφάλειας</h4>
 					<ul>
 						<li><?php echo $html->link("Όλα", "/vehicles/getFromInsuranceCompanyId"); ?></li>
-						<li><?php echo $html->link("Απλήρωτα", "/insuranceContracts/isPaid/no"); ?></li>
-						<li><?php echo $html->link("Πληρωμένα", "/insuranceContracts/isPaid/yes"); ?></li>
+						<li><?php echo $html->link("Απλήρωτα", "/vehicles/getInsuranceContractsIsPaid/no"); ?></li>
+						<li><?php echo $html->link("Πληρωμένα", "/vehicles/getInsuranceContractsIsPaid/yes"); ?></li>
 						<li><?php echo $html->link("Λήγουν την επόμενη εβδομάδα", "/vehicles/getInsuranceContractsDue/7"); ?></li>
 						<li><?php echo $html->link("Λήγουν τον επόμενο μήνα", "/vehicles/getInsuranceContractsDue/30"); ?></li>
 						<li><?php echo $html->link("Ανά Εταιρία", "/insuranceCompanies"); ?></li>
@@ -86,8 +86,8 @@
 					<h4>Συμβ. Οδ. Βοήθειας</h4>
 					<ul>
 						<li><?php echo $html->link("Όλα", "/vehicles/getFromOdikiCompanyId"); ?></li>
-						<li><?php echo $html->link("Απλήρωτα", "/odikiContracts/isPaid/no"); ?></li>
-						<li><?php echo $html->link("Πληρωμένα", "/odikiContracts/isPaid/yes"); ?></li>
+						<li><?php echo $html->link("Απλήρωτα", "/vehicles/getOdikiContractsIsPaid/no"); ?></li>
+						<li><?php echo $html->link("Πληρωμένα", "/vehicles/getOdikiContractsIsPaid/yes"); ?></li>
 						<li><?php echo $html->link("Λήγουν την επόμενη εβδομάδα", "/vehicles/getOdikiContractsDue/7"); ?></li>
 						<li><?php echo $html->link("Λήγουν τον επόμενο μήνα", "/vehicles/getOdikiContractsDue/30"); ?></li>
 						<li><?php echo $html->link("Ανά Εταιρία", "/odikiCompanies"); ?></li>

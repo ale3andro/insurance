@@ -4,7 +4,7 @@
 		var $name="odiki_companies";
 		var $paginate = array( 'limit' => 10, 'order' => array('OdikiCompany.description' => 'asc'));
 		
-		function index()
+		function index() /* ok */
 		{
 			if (isset($this->params['requested']))
 				return $this->OdikiCompany->find("all");
@@ -13,13 +13,17 @@
 			$this->set("theFirms", $this->paginate());	
 		}
 		
-		function get($id)
+		function get($id) /* ok */
 		{
+			if (!isset($id))
+				$this->cakeError('error404');
 			if (isset($this->params['requested']))
 				return $this->OdikiCompany->findById($id);			
+			else
+				$this->cakeError('error404');
 		}
 		
-		function add()
+		function add() /* ok */
 		{
 			if (!empty($this->data)) 
 			{
@@ -33,14 +37,19 @@
 				$this->pageTitle = "Προσθήκη Εταιρίας Οδικής Βοήθειας";
 		}
 		
-		function edit($id)
+		function edit($id) /* ok */
 		{
+			if (!isset($id))
+				$this->cakeError('error404');
+				
 			$this->OdikiCompany->id = $id;
 			
 			if (empty($this->data))
 			{
 				$this->pageTitle = "Διόρθωση Στοιχείων Εταιρίας Οδικής Βοήθειας";
 				$this->data = $this->OdikiCompany->read();
+				if ($this->data==null)
+					$this->cakeError('error404');
 			}
 			else
 			{
@@ -50,12 +59,18 @@
 			}
 		}
 		
-		function view($id)
+		function view($id) /* ok */
 		{
+			if (!isset($id))
+				$this->cakeError('error404');
+				
 			$company = $this->OdikiCompany->findById($id);
+			if ($company==null)
+				$this->cakeError('error404');
+				
 			$this->set('company', $company);
 		}
-		function createSelect($selectedId=-1)
+		function createSelect($selectedId=-1) /* ok */
 		{
 			if (isset($this->params['requested']))
 			{
@@ -68,6 +83,8 @@
 				$retVal .= "</select>";
 				return $retVal;
 			}
+			else
+				$this->cakeError('error404');
 		}		
 	}
 ?>

@@ -3,7 +3,7 @@
 	{
 		var $name="insurance_companies";
 		var $paginate = array( 'limit' => 10, 'order' => array('InsuranceCompany.description' => 'asc'));
-		function index()
+		function index() /* ok */
 		{
 			if (isset($this->params['requested']))
 				return $this->InsuranceCompany->find("all");
@@ -12,13 +12,17 @@
 			$this->set("theCompanies", $this->paginate());	
 		}
 		
-		function get($id)
+		function get($id) /* ok */
 		{
+			if (!isset($id))
+				$this->cakeError('error404');
 			if (isset($this->params['requested']))
-				return $this->InsuranceCompany->findById($id);			
+				return $this->InsuranceCompany->findById($id);
+			else
+				$this->cakeError('error404');
 		}
 		
-		function add()
+		function add() /* ok */
 		{
 			if (!empty($this->data)) 
 			{
@@ -32,14 +36,19 @@
 				$this->pageTitle = "Προσθήκη Ασφαλιστικής Εταιρίας";
 		}
 		
-		function edit($id)
+		function edit($id) /* ok */
 		{
+			if (!isset($id))
+				$this->cakeError('error404');
+				
 			$this->InsuranceCompany->id = $id;
 			
 			if (empty($this->data))
 			{
 				$this->pageTitle = "Διόρθωση Στοιχείων Ασφαλιστικής Εταιρίας";
 				$this->data = $this->InsuranceCompany->read();
+				if ($this->data==null)
+					$this->cakeError('error404');
 			}
 			else
 			{
@@ -49,43 +58,19 @@
 			}
 		}
 		
-		function view($id)
+		function view($id) /* ok */
 		{
+			if (!isset($id))
+				$this->cakeError('error404');
 			$company = $this->InsuranceCompany->findById($id);
-			$this->set('title', $company['InsuranceCompany']['description']);
+			
+			if ($company==null)
+				$this->cakeError('error404');
+			
 			$this->set('company', $company);
-			$contracts = $this->requestAction("/insuranceContracts/byCompany/" . $id);
-			
-			if (count($contracts) != 0)
-			{
-				foreach ($contracts as $contract)
-					$vehicles[] = $this->requestAction("/vehicles/getFromInsuranceId/" . $contract['InsuranceContract']['id']);
-				
-				function cmp($a, $b)
-				{
-					if ($a['Vehicle']['last_name']>$b['Vehicle']['last_name'])
-						return 1;
-					else if ($a['Vehicle']['last_name']<$b['Vehicle']['last_name'])
-						return -1;
-					else if ($a['Vehicle']['last_name']==$b['Vehicle']['last_name'])
-					{
-						if ($a['Vehicle']['first_name']>$b['Vehicle']['first_name'])
-							return 1;
-						else
-							return -1;
-					}
-				}
-				uasort($vehicles, "cmp");
-			}
-			else
-				$vehicles = null;
-			
-			$this->set('vehicles', $vehicles);
-			$this->set('contracts', $contracts);
 		}
-		function createSelect($selectedId=-1)
+		function createSelect($selectedId=-1) /* ok */
 		{
-			
 			if (isset($this->params['requested']))
 			{
 				$allCompanies = $this->InsuranceCompany->find("all");
@@ -96,7 +81,9 @@
 					">" . $company['InsuranceCompany']['description'] . "</option>";
 				$retVal .= "</select>";
 				return $retVal;
-			}			
+			}
+			else
+				$this->cakeError('error404');		
 		}		
 	}
 ?>

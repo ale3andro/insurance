@@ -1,11 +1,15 @@
 <!-- file /app/views/odiki_contracts/view.ctp -->
-<?php echo $this->element("header", array( "activeTab" => -1 )); ?>
+<?php 
+	echo $this->element("header", array( "activeTab" => -1 )); 
+	$title = "Προβολή Συμβολαίου Οδικής Βοήθειας " . $vehicle['Vehicle']['plate'];
+	$this->set("title", $title);
+?>
 <div class="post">
-	<div class="post_title"><h2>Προβολή Συμβολαίου Οδικής Βοήθειας <?php echo $vehicle['Vehicle']['plate']; ?></h2></div>
+	<div class="post_title"><h2><?php echo $title; ?></h2></div>
 	<div class="post_body">
 		
 		<?php
-			echo "<p>Ονοματεπώνυμο: " . $vehicle['Vehicle']['first_name'] . " " . $vehicle['Vehicle']['last_name'] . "</p>";
+			echo "<p>Ονοματεπώνυμο: " . $vehicle['Vehicle']['first_name'] . "</p>";
 			echo "<p>Όνομα Πατέρα: " . $vehicle['Vehicle']['father_name'] . "</p>";
 			echo "<p>Αριθμός Πινακίδας: " . $vehicle['Vehicle']['plate'] . "</p>";
 			

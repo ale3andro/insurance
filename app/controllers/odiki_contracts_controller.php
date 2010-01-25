@@ -4,24 +4,27 @@
 		var $name="odiki_contracts";
 		var $paginate = array( 'limit' => 10, 'order' => array('OdikiContract.from' => 'asc'));
 		
-		function index()
-		{
-			$contracts = $this->OdikiContract->find('all');	
-		}
-		function get($id)
+		function get($id) /* ok */
 		{
 			if (isset($this->params['requested']))
-				return $this->OdikiContract->findById($id);			
+				return $this->OdikiContract->findById($id);
+			else
+				$this->cakeError('error404');
 		}
 		
-		function due($numDays)
+		function due($numDays=7) /* ok */
 		{
-			$today = date('Y-m-d');
-			$due  = date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")+$numDays, date("Y")));
-			return $this->OdikiContract->find('all', array('conditions' => array('to >' => $today, 'to <' => $due))); 
+			if (isset($this->params['requested']))
+			{
+				$today = date('Y-m-d');
+				$due  = date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")+$numDays, date("Y")));
+				return $this->OdikiContract->find('all', array('conditions' => array('to >' => $today, 'to <' => $due))); 
+			}
+			else
+				$this->cakeError('error404');
 		}
 		
-		function byCompany($companyId=-1)
+		function byCompany($companyId=-1) /* ok */
 		{
 			if ($companyId!=-1)
 				return $this->OdikiContract->find("all", array('conditions' => array('company_id' => $companyId)));
@@ -31,19 +34,25 @@
 		
 		
 		/* fixed */
-		function view($id)
+		function view($id) /* ok */
 		{
+			if (!isset($id))
+				$this->cakeError('error404');
 			$vehicle = $this->requestAction("/vehicles/getFromOdikiId/" . $id);
-			$this->set("vehicle",$vehicle);
 			$odikiContract = $this->OdikiContract->findById($id);
+			if ($odikiContract==null)
+				$this->cakeError('error404');
+			$this->set("vehicle",$vehicle);
 			$this->set("odikiContract", $odikiContract);
 			$this->set("odikiCompany", $this->requestAction("/odikiCompanies/get/" . 
 						$odikiContract['OdikiContract']['company_id']));
 		}
 		
 		/* fixed */
-		function add($vehicleId)
+		function add($vehicleId) /* ok */
 		{
+			if (!isset($vehicleId))
+				$this->cakeError('error404');
 			if (!empty($this->data)) 
 			{
 				if ($this->OdikiContract->save($this->data)) 
@@ -55,19 +64,26 @@
 			}
 			else
 			{
+				if ($this->requestAction("/vehicles/get/" . $vehicleId)==null)
+					$this->cakeError('error404');
 				$this->set('vehicleId', $vehicleId);
 				$this->set('odikiCompaniesSelect', $this->requestAction("/odikiCompanies/createSelect/"));
 			}
 		}
 		
 		/* fixed */
-		function edit($id)
+		function edit($id) /* ok */
 		{
+			if (!isset($id))
+				$this->cakeError('error404');
+				
 			$this->OdikiContract->id = $id;
 			
 			if (empty($this->data))
 			{
 				$this->data = $this->OdikiContract->read();
+				if ($this->data==null)
+					$this->cakeError('error404');
 				$this->set('odikiCompaniesSelect', 
 						$this->requestAction("/odikiCompanies/createSelect/" . $this->data['OdikiContract']['company_id']));
 			}
@@ -79,27 +95,43 @@
 			}
 		}
 		/* fixed */
-		function pay($id)
+		function pay($id) /* ok */
 		{
-			$this->data = $this->OdikiContract->findById($id);
-			$this->data['OdikiContract']['is_paid'] = 1;
-			$this->OdikiContract->save($this->data);
-			$this->pageTitle = "Πληρωμή Συμβολαίου";
-			$this->Session->setFlash('Το συμβόλαιο έχει πληρωθεί...');
-			$this->redirect(array('action' => 'view', $id));
+			if (!isset($id))
+				$this->cakeError('error404');
+				
+			if (isset($this->params['requested']))
+			{
+				$this->data = $this->OdikiContract->findById($id);
+				$this->data['OdikiContract']['is_paid'] = 1;
+				$this->OdikiContract->save($this->data);
+				$this->pageTitle = "Πληρωμή Συμβολαίου";
+				$this->Session->setFlash('Το συμβόλαιο έχει πληρωθεί...');
+				$this->redirect(array('action' => 'view', $id));
+			}
+			else
+				$this->cakeError('error404');
 		}
 		/* fixed */
-		function unpay($id)
+		function unpay($id) /* ok */
 		{
-			$this->data = $this->OdikiContract->findById($id);
-			$this->data['OdikiContract']['is_paid'] = 0;
-			$this->OdikiContract->save($this->data);
-			$this->pageTitle = "Πληρωμή Συμβολαίου";
-			$this->Session->setFlash('Η αναίρεση πληρωμής ολοκληρώθηκε...');
-			$this->redirect(array('action' => 'view', $id));
+			if (!isset($id))
+				$this->cakeError('error404');
+				
+			if (isset($this->params['requested']))
+			{
+				$this->data = $this->OdikiContract->findById($id);
+				$this->data['OdikiContract']['is_paid'] = 0;
+				$this->OdikiContract->save($this->data);
+				$this->pageTitle = "Πληρωμή Συμβολαίου";
+				$this->Session->setFlash('Η αναίρεση πληρωμής ολοκληρώθηκε...');
+				$this->redirect(array('action' => 'view', $id));
+			}
+			else
+				$this->cakeError('error404');
 		}
 	
-		function delete($id)
+		function delete($id) /* ok */
 		{
 			if (isset($this->params['requested']))
 				$this->OdikiContract->del($id);
@@ -111,36 +143,33 @@
 				$this->redirect(array('controller' => 'vehicles', 'action' => 'view', $vehicle['Vehicle']['id']));
 			}
 		}
-		function isPaid($status)
+		function isPaid($status="no") /* ok */
 		{
-			if (!in_array($status, array("yes","no")))
-				die("The input is not valid");
-			if ($status=="no")
-				$conditions = array('OdikiContract.is_paid' => '0');
-			else
-				$conditions = array('OdikiContract.is_paid' => '1');
-			$contracts = $this->paginate('OdikiContract', $conditions);
-			if (count($contracts) != 0)
+			if (isset($this->params['requested']))
 			{
-				$i=0;
-				foreach ($contracts as $contract)
-					$vehicles[$i++] = $this->requestAction("/vehicles/getFromOdikiId/" . $contract['OdikiContract']['id']);
+				if ($status=="no")
+					$conditions = array('OdikiContract.is_paid' => '0');
+				else
+					$conditions = array('OdikiContract.is_paid' => '1');
+			
+				return $this->OdikiContract->find('all', array('conditions' => $conditions));
 			}
 			else
-				$vehicles = null;
-			
-			$this->set('status', $status);
-			$this->set('contracts', $contracts);
-			$this->set('vehicles', $vehicles);
+				$this->cakeError('error404');
 		}
-		
-		function statistics($companyId=-1)
-		{
+		function statistics($companyId=-1) /* ok */
+		{			
+			if ($companyId!=-1)
+			{
+				if ($this->requestAction("/odikiCompanies/get/" . $companyId)==null)
+					$this->cakeError('error404');
+			}		
+				
 			if ($companyId!=-1)
 				$contracts = $this->OdikiContract->find('all', array('conditions' => array('OdikiContract.company_id =' => $companyId)));
 			else
 				$contracts = $this->OdikiContract->find('all');
-				
+			
 			$paidContracts = 0; $paidSum = 0;
 			$unpaidContracts = 0; $unpaidSum = 0;
 			foreach ($contracts as $contract)

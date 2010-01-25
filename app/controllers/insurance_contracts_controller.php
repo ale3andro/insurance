@@ -4,48 +4,27 @@
 		var $name="insurance_contracts";
 		var $paginate = array( 'limit' => 10, 'order' => array('InsuranceContract.from' => 'asc'));
 		
-		function index()
-		{
-			$contracts = $this->InsuranceContract->find('all');
-			if (count($contracts) != 0)
-			{
-				foreach ($contracts as $contract)
-					$vehicles[] = $this->requestAction("/vehicles/getFromInsuranceId/" . $contract['InsuranceContract']['id']);
-				
-				function cmp($a, $b)
-				{
-					if ($a['Vehicle']['last_name']>$b['Vehicle']['last_name'])
-						return 1;
-					else if ($a['Vehicle']['last_name']<$b['Vehicle']['last_name'])
-						return -1;
-					else if ($a['Vehicle']['last_name']==$b['Vehicle']['last_name'])
-					{
-						if ($a['Vehicle']['first_name']>$b['Vehicle']['first_name'])
-							return 1;
-						else
-							return -1;
-					}
-				}
-				uasort($vehicles, "cmp");
-			}
-			else
-				$vehicles = null;
-		}
-		
-		function get($id)
+		function get($id) /* ok */
 		{
 			if (isset($this->params['requested']))
-				return $this->InsuranceContract->findById($id);			
+				return $this->InsuranceContract->findById($id);
+			else
+				$this->cakeError('error404');		
 		}
 		
-		function due($numDays)
+		function due($numDays=7) /* ok */
 		{
-			$today = date('Y-m-d');
-			$due  = date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")+$numDays, date("Y")));
-			return $this->InsuranceContract->find('all', array('conditions' => array('to >' => $today, 'to <' => $due))); 
+			if (isset($this->params['requested']))
+			{
+				$today = date('Y-m-d');
+				$due  = date('Y-m-d', mktime(0, 0, 0, date("m")  , date("d")+$numDays, date("Y")));
+				return $this->InsuranceContract->find('all', array('conditions' => array('to >' => $today, 'to <' => $due))); 
+			}
+			else
+				$this->cakeError('error404');				
 		}
 		
-		function byCompany($companyId=-1)
+		function byCompany($companyId=-1) /* ok */
 		{
 			if ($companyId!=-1)
 				return $this->InsuranceContract->find("all", array('conditions' => array('company_id' => $companyId)));
@@ -54,19 +33,25 @@
 		}		
 		
 		/* fixed */
-		function view($id)
+		function view($id) /* ok */
 		{
+			if (!isset($id))
+				$this->cakeError('error404');
 			$vehicle = $this->requestAction("/vehicles/getFromInsuranceId/" . $id);
-			$this->set("vehicle",$vehicle);
 			$insuranceContract = $this->InsuranceContract->findById($id);
+			if ($insuranceContract==null)
+				$this->cakeError('error404');
+			$this->set("vehicle",$vehicle);
 			$this->set("insuranceContract", $insuranceContract);
 			$this->set("insuranceCompany", $this->requestAction("/insuranceCompanies/get/" . 
 						$insuranceContract['InsuranceContract']['company_id']));
 		}
 		
 		/* fixed */
-		function add($vehicleId)
+		function add($vehicleId) /* ok */
 		{
+			if (!isset($vehicleId))
+				$this->cakeError('error404');
 			if (!empty($this->data)) 
 			{
 				if ($this->InsuranceContract->save($this->data)) 
@@ -78,19 +63,25 @@
 			}
 			else
 			{
+				if ($this->requestAction("/vehicles/get/" . $vehicleId)==null)
+					$this->cakeError('error404');
 				$this->set('vehicleId', $vehicleId);
 				$this->set('insuranceCompaniesSelect', $this->requestAction("/insuranceCompanies/createSelect/"));
 			}
 		}
 		
 		/* fixed */
-		function edit($id)
+		function edit($id) /* ok */
 		{
+			if (!isset($id))
+				$this->cakeError('error404');
 			$this->InsuranceContract->id = $id;
 			
 			if (empty($this->data))
 			{
 				$this->data = $this->InsuranceContract->read();
+				if ($this->data==null)
+					$this->cakeError('error404');
 				$this->set('insuranceCompaniesSelect', 
 						$this->requestAction("/insuranceCompanies/createSelect/" . $this->data['InsuranceContract']['company_id']));
 			}
@@ -102,27 +93,42 @@
 			}
 		}
 		/* fixed */
-		function pay($id)
+		function pay($id) /* ok */
 		{
-			$this->data = $this->InsuranceContract->findById($id);
-			$this->data['InsuranceContract']['is_paid'] = 1;
-			$this->InsuranceContract->save($this->data);
-			$this->pageTitle = "Πληρωμή Συμβολαίου";
-			$this->Session->setFlash('Το συμβόλαιο έχει πληρωθεί...');
-			$this->redirect(array('action' => 'view', $id));
+			if (!isset($id))
+				$this->cakeError('error404');
+			if (isset($this->params['requested']))
+			{
+				$this->data = $this->InsuranceContract->findById($id);
+				$this->data['InsuranceContract']['is_paid'] = 1;
+				$this->InsuranceContract->save($this->data);
+				$this->pageTitle = "Πληρωμή Συμβολαίου";
+				$this->Session->setFlash('Το συμβόλαιο έχει πληρωθεί...');
+				$this->redirect(array('action' => 'view', $id));
+			}
+			else
+				$this->cakeError('error404');
 		}
 		/* fixed */
-		function unpay($id)
+		function unpay($id) /* ok */
 		{
-			$this->data = $this->InsuranceContract->findById($id);
-			$this->data['InsuranceContract']['is_paid'] = 0;
-			$this->InsuranceContract->save($this->data);
-			$this->pageTitle = "Πληρωμή Συμβολαίου";
-			$this->Session->setFlash('Η αναίρεση πληρωμής ολοκληρώθηκε...');
-			$this->redirect(array('action' => 'view', $id));
+			if (!isset($id))
+				$this->cakeError('error404');
+				
+			if (isset($this->params['requested']))
+			{
+				$this->data = $this->InsuranceContract->findById($id);
+				$this->data['InsuranceContract']['is_paid'] = 0;
+				$this->InsuranceContract->save($this->data);
+				$this->pageTitle = "Πληρωμή Συμβολαίου";
+				$this->Session->setFlash('Η αναίρεση πληρωμής ολοκληρώθηκε...');
+				$this->redirect(array('action' => 'view', $id));
+			}
+			else
+				$this->cakeError('error404');
 		}
 		
-		function delete($id)
+		function delete($id) /* ok */
 		{
 			if (isset($this->params['requested']))
 				$this->InsuranceContract->del($id);
@@ -134,32 +140,28 @@
 				$this->redirect(array('controller' => 'vehicles', 'action' => 'view', $vehicle['Vehicle']['id']));			
 			}
 		}
-		
-		function isPaid($status)
+		function isPaid($status="no") /* ok */
 		{
-			if (!in_array($status, array("yes","no")))
-				die("The input is not valid");
-			if ($status=="no")
-				$conditions = array('InsuranceContract.is_paid' => '0');
-			else
-				$conditions = array('InsuranceContract.is_paid' => '1');
-			
-			$contracts = $this->paginate('InsuranceContract', $conditions);
-			if (count($contracts) != 0)
+			if (isset($this->params['requested']))
 			{
-				$i=0;
-				foreach ($contracts as $contract)
-					$vehicles[$i++] = $this->requestAction("/vehicles/getFromInsuranceId/" . $contract['InsuranceContract']['id']);
+				if ($status=="no")
+					$conditions = array('InsuranceContract.is_paid' => '0');
+				else
+					$conditions = array('InsuranceContract.is_paid' => '1');
+	
+				return $this->InsuranceContract->find('all', array('conditions' => $conditions));
 			}
 			else
-				$vehicles = null;
-				
-			$this->set('status', $status);
-			$this->set('contracts', $contracts);
-			$this->set('vehicles', $vehicles);
+				$this->cakeError('error404');
 		}
-		function statistics($companyId=-1)
+		function statistics($companyId=-1) /* ok */
 		{
+			if ($companyId!=-1)
+			{
+				if ($this->requestAction("/insuranceCompanies/get/" . $companyId)==null)
+					$this->cakeError('error404');
+			}	
+			
 			if ($companyId!=-1)
 				$contracts = $this->InsuranceContract->find('all', array('conditions' => array('InsuranceContract.company_id =' => $companyId)));
 			else
