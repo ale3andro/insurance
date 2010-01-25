@@ -65,3 +65,5 @@
 2010-01-25 10:44:00 Notice: Notice (8): Undefined variable: code in [CORE/cake/libs/error.php, line 133]
 2010-01-25 10:44:00 Notice: Notice (8): Undefined variable: name in [CORE/cake/libs/error.php, line 134]
 2010-01-25 11:45:23 Notice: Notice (8): Undefined variable: title in [APP/views/odiki_contracts/view.ctp, line 8]
+2010-01-25 14:26:20 Notice: Notice (8): Undefined variable: vehilces in [APP/views/vehicles/search.ctp, line 18]
+2010-01-25 14:26:54 Notice: Notice (8): Undefined variable: vehilces in [APP/views/vehicles/search.ctp, line 18]

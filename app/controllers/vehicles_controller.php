@@ -18,12 +18,14 @@
 			else
 				$this->cakeError('error404');
 		}
-		/*
-		function getFromInsuranceId($insuranceId)
+		
+		function getFromInsuranceId($insuranceId) /* ok */
 		{
-			return $this->Vehicle->find("first", array( 'conditions' => array('Vehicle.insurance_contract_id =' => $insuranceId)));
+			if (isset($this->params['requested']))
+				return $this->Vehicle->find("first", array( 'conditions' => array('Vehicle.insurance_contract_id =' => $insuranceId)));
+			else
+				$this->cakeError('error404');
 		}
-		* */
 		function getFromInsuranceCompanyId($insuranceCompanyId=-1) /* ok */ 
 		{
 			if (($insuranceCompanyId!=-1) && ($this->requestAction("/insuranceCompanies/get/" . $insuranceCompanyId)==null) )
@@ -85,12 +87,15 @@
 			$this->set("theVehicles", $vehicles);
 			$this->set("numDays", $numDays);
 		}
-		/*
-		function getFromOdikiId($odikiId)
+		
+		function getFromOdikiId($odikiId) /* ok */
 		{
-			return $this->Vehicle->find("first", array( 'conditions' => array('Vehicle.odiki_contract_id =' => $odikiId)));
+			if (isset($this->params['requested']))
+				return $this->Vehicle->find("first", array( 'conditions' => array('Vehicle.odiki_contract_id =' => $odikiId)));
+			else
+				$this->cakeError('error404');
 		}
-		*/
+		
 		function getFromOdikiCompanyId($odikiCompanyId=-1) /* ok */
 		{
 			if ( ($odikiCompanyId!=-1) && ($this->requestAction("/odikiCompanies/get/" . $odikiCompanyId)==null) )
@@ -174,13 +179,13 @@
 			if (!empty($this->data))
 			{
 				if ($this->data['Vehicle']['first_name'] != "")
-					$conditions['Vehicle.first_name LIKE'] = $this->data['Vehicle']['first_name'] . "%";
+					$conditions['Vehicle.first_name LIKE'] = "%" . $this->data['Vehicle']['first_name'] . "%";
 				if ($this->data['Vehicle']['last_name'] != "")
-					$conditions['Vehicle.last_name LIKE'] = $this->data['Vehicle']['last_name'] . "%";
-				if ($this->data['Vehicle']['fatherName'] != "")
-					$conditions['Vehicle.father_name LIKE'] = $this->data['Vehicle']['father_name'] . "%";
+					$conditions['Vehicle.last_name LIKE'] = "%" . $this->data['Vehicle']['last_name'] . "%";
+				if ($this->data['Vehicle']['father_name'] != "")
+					$conditions['Vehicle.father_name LIKE'] = "%" . $this->data['Vehicle']['father_name'] . "%";
 				if ($this->data['Vehicle']['plate'] != "")
-					$conditions['Vehicle.plate LIKE'] = $this->data['Vehicle']['plate'] . "%";
+					$conditions['Vehicle.plate LIKE'] = "%" . $this->data['Vehicle']['plate'] . "%";
 				$this->set("vehicles", $this->paginate('Vehicle', $conditions));
 			}
 		}

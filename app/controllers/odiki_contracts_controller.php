@@ -64,7 +64,8 @@
 			}
 			else
 			{
-				if ($this->requestAction("/vehicles/get/" . $vehicleId)==null)
+				$vehicle = $this->requestAction("/vehicles/get/" . $vehicleId);
+				if (($vehicle==null) || ($vehicle['Vehicle']['odiki_contract_id']!=0))
 					$this->cakeError('error404');
 				$this->set('vehicleId', $vehicleId);
 				$this->set('odikiCompaniesSelect', $this->requestAction("/odikiCompanies/createSelect/"));

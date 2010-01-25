@@ -17,6 +17,7 @@
 			
 				echo $paginator->counter(array('format' => 'Σελίδα %page% από %pages%')) . "<br />";
 				echo $paginator->numbers();
+				echo "<br />" . $paginator->counter(array('format' => 'Σύνολο Αποτελεσμάτων: %count%'));
 			}
 			else
 				echo "Δεν υπάρχουν καταχωρημένες εταιρίες Οδικής Βοήθειας";
