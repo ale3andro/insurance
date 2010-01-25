@@ -304,5 +304,17 @@
 			$this->set('numInsured', $numInsured);
 			$this->set('numOdiki', $numOdiki);
 		}
+		
+		function withoutInsurance()
+		{
+			$conditions['Vehicle.insurance_contract_id'] = "0";
+			$this->set("vehicles", $this->paginate('Vehicle', $conditions));
+		}
+		
+		function withoutOdiki()
+		{
+			$conditions['Vehicle.odiki_contract_id'] = "0";
+			$this->set("vehicles", $this->paginate('Vehicle', $conditions));
+		}
 	}
 ?>

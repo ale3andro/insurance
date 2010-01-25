@@ -5,7 +5,7 @@
 	$this->set("title", $title);
 ?>
 <div class="post">
-	<div class="post_title"><?php echo $title; ?><h2></h2></div>
+	<div class="post_title"><h2><?php echo $title; ?></h2></div>
 	<div class="post_body">
 		<?php
 			if ($unpaidContracts+$paidContracts==0)

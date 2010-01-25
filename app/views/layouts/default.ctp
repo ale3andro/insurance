@@ -57,6 +57,8 @@
 						<li><?php echo $html->link("Όλα τα οχήματα", "/vehicles"); ?></li>
 						<li><?php echo $html->link("Προσθήκη οχήματος", "/vehicles/add"); ?></li>
 						<li><?php echo $html->link("Αναζήτηση οχήματος", "/vehicles/search"); ?></li>
+						<li><?php echo $html->link("Οχήματα χωρίς Ασφάλεια", "/vehicles/withoutInsurance"); ?></li>
+						<li><?php echo $html->link("Οχήματα χωρίς Οδική Βοήθεια", "/vehicles/withoutOdiki"); ?></li>
 						<li><?php echo $html->link("Συνολικά Στατιστικά", "/vehicles/statistics"); ?></li>
 					</ul>
 
