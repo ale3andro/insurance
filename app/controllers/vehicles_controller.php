@@ -218,10 +218,19 @@
 			
 			if (!empty($this->data)) 
 			{
-				if ($this->Vehicle->save($this->data)) 
+				if ( ($this->data['Vehicle']['plate']=="") || ($this->data['Vehicle']['last_name']=="") )
 				{
-					$this->Session->setFlash('Το όχημα έχει αποθηκευτεί...');
-					$this->redirect(array('action' => 'view',  $this->Vehicle->id));
+					$this->flash("Θα πρέπει να καταχωρηθεί τουλάχιστον το Επώνυμο και ο Αριθμός Πινακίδας",
+								"/vehicles/add", 3);
+				}
+				
+				else
+				{
+					if ($this->Vehicle->save($this->data)) 
+					{
+						$this->Session->setFlash('Το όχημα έχει αποθηκευτεί...');
+						$this->redirect(array('action' => 'view',  $this->Vehicle->id));
+					}
 				}
 			}
 		}

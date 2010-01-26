@@ -101,17 +101,12 @@
 			if (!isset($id))
 				$this->cakeError('error404');
 				
-			if (isset($this->params['requested']))
-			{
-				$this->data = $this->OdikiContract->findById($id);
-				$this->data['OdikiContract']['is_paid'] = 1;
-				$this->OdikiContract->save($this->data);
-				$this->pageTitle = "Πληρωμή Συμβολαίου";
-				$this->Session->setFlash('Το συμβόλαιο έχει πληρωθεί...');
-				$this->redirect(array('action' => 'view', $id));
-			}
-			else
-				$this->cakeError('error404');
+			$this->data = $this->OdikiContract->findById($id);
+			$this->data['OdikiContract']['is_paid'] = 1;
+			$this->OdikiContract->save($this->data);
+			$this->pageTitle = "Πληρωμή Συμβολαίου";
+			$this->Session->setFlash('Το συμβόλαιο έχει πληρωθεί...');
+			$this->redirect(array('action' => 'view', $id));
 		}
 		/* fixed */
 		function unpay($id) /* ok */
@@ -119,17 +114,12 @@
 			if (!isset($id))
 				$this->cakeError('error404');
 				
-			if (isset($this->params['requested']))
-			{
-				$this->data = $this->OdikiContract->findById($id);
-				$this->data['OdikiContract']['is_paid'] = 0;
-				$this->OdikiContract->save($this->data);
-				$this->pageTitle = "Πληρωμή Συμβολαίου";
-				$this->Session->setFlash('Η αναίρεση πληρωμής ολοκληρώθηκε...');
-				$this->redirect(array('action' => 'view', $id));
-			}
-			else
-				$this->cakeError('error404');
+			$this->data = $this->OdikiContract->findById($id);
+			$this->data['OdikiContract']['is_paid'] = 0;
+			$this->OdikiContract->save($this->data);
+			$this->pageTitle = "Πληρωμή Συμβολαίου";
+			$this->Session->setFlash('Η αναίρεση πληρωμής ολοκληρώθηκε...');
+			$this->redirect(array('action' => 'view', $id));
 		}
 	
 		function delete($id) /* ok */

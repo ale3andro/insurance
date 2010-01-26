@@ -5,8 +5,8 @@
 	<div class="post_body">
 		<p>Απλήρωτα Συμβόλαια:</p>
 		<ul>
-			<li><?php echo $html->link("Ασφάλειας","/insuranceContracts/isPaid/no"); ?></li>
-			<li><?php echo $html->link("Οδικής Βοήθειας","/odikiContracts/isPaid/no"); ?></li>
+			<li><?php echo $html->link("Ασφάλειας","/vehicles/getInsuranceContractsIsPaid/no"); ?></li>
+			<li><?php echo $html->link("Οδικής Βοήθειας","/vehicles/getOdikiContractsIsPaid/no"); ?></li>
 		</ul>
 	</div>
 </div>
