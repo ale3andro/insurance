@@ -29,7 +29,7 @@
 							<p style="text-align:center">Τ.Κ. 54453</p>
 							<p style="text-align:center">Κ. Τούμπα - Θεσσαλονίκη</p>
 							<p style="text-align:center">Τηλ. 2310.902904</p>
-							<p style="text-align:center">Fax. 2310.</p>
+							<p style="text-align:center">Fax. 2310.914693</p>
 							<p style="text-align:center"><a href="http://manthu.gr">http://manthu.gr</a></p>
 							<p style="text-align:center"><a href="mailto:manthu@otenet.gr">manthu@otenet.gr</a></p>
 						</div>
