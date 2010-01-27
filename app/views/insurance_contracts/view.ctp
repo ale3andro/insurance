@@ -1,6 +1,10 @@
 <!-- file /app/views/insurance_contracts/view.ctp -->
 <?php 
-	echo $this->element("header", array( "activeTab" => -1 )); 
+	if (($session->read('user'))!=null)
+		echo $this->element("header", array( "activeTab" => -1, "username" => $session->read('user')) ); 
+	else
+		echo $this->element("header", array( "activeTab" => -1) ); 
+
 	$title = "Προβολή Ασφαλιστικού Συμβολαίου " . $vehicle['Vehicle']['plate'];
 	$this->set("title", $title);
 ?>

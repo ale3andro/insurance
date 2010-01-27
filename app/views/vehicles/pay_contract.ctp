@@ -1,5 +1,10 @@
 <!-- File: /app/views/contracts/pay_contract.ctp -->	
-<?php echo $this->element("header", array( "activeTab" => 1) ); ?>
+<?php 
+	if (($session->read('user'))!=null)
+		echo $this->element("header", array( "activeTab" => 1, "username" => $session->read('user')) ); 
+	else
+		echo $this->element("header", array( "activeTab" => 1) ); 
+?>
 <div class="post">
 	<div class="post_title"><h2>Πληρωμή Συμβολαίου <?php echo $contract['Contract']['plate']; ?></h2></div>
 	<div class="post_body">

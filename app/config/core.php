@@ -38,7 +38,7 @@
  * In production mode, flash messages redirect after a time interval.
  * In development mode, you need to click the flash message to continue.
  */
-	Configure::write('debug', 0);
+	Configure::write('debug', 3);
 /**
  * Application wide charset encoding
  */
@@ -122,7 +122,7 @@
  * Session time out time (in seconds).
  * Actual value depends on 'Security.level' setting.
  */
-	Configure::write('Session.timeout', '120');
+	Configure::write('Session.timeout', '600');
 /**
  * If set to false, sessions are not automatically started.
  */
@@ -168,8 +168,10 @@
  * The classname and database used in CakePHP's
  * access control lists.
  */
-	Configure::write('Acl.classname', 'DbAcl');
-	Configure::write('Acl.database', 'default');
+	Configure::write('Acl.classname', 'IniAcl');
+	
+	//Configure::write('Acl.classname', 'DbAcl');
+	//Configure::write('Acl.database', 'default');
 /**
  *
  * Cache Engine Configuration

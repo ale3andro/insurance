@@ -1,6 +1,9 @@
 <!-- file /app/views/vehicles/get_from_insurance_company_id.ctp -->
 <?php 
-	echo $this->element("header", array( "activeTab" => 1) ); 
+	if (($session->read('user'))!=null)
+		echo $this->element("header", array( "activeTab" => 1, "username" => $session->read('user')) ); 
+	else
+		echo $this->element("header", array( "activeTab" => 1) ); 
 	$title = "Όλα τα Συμβόλαια Ασφάλειας" . (($company!=null)?" (" . $company['InsuranceCompany']['description'] . ")":"");
 	$this->set("title", $title);
 ?>

@@ -28,10 +28,20 @@
 			<li <?php echo ($activeTab==3?"class=\"current_page_item\"":""); ?>><?php echo $html->link("Προσθήκη", "/vehicles/add"); ?></li>
 			<li <?php echo ($activeTab==4?"class=\"current_page_item\"":""); ?>><?php echo $html->link("Ανά Εταιρία", "/perCompany"); ?></li>
 			<li <?php echo ($activeTab==5?"class=\"current_page_item\"":""); ?>><?php echo $html->link("Αναζήτηση", "/vehicles/search"); ?></li>
+			<li <?php echo ($activeTab==6?"class=\"current_page_item\"":""); ?>>
+				<?php 
+					if (!isset($username))
+						echo $html->link("Είσοδος", "/users/login"); 
+					else
+						echo $html->link("Έξοδος", "/users/logout"); 
+				?>
+			</li>
 		</ul>
-
 		<div class="clearer">&nbsp;</div>
-
+		<?php 
+			if (isset($username))
+				echo "Συνδεδεμένος ως " . $username;
+		?>
 	</div>
 </div>
 <div id="main_wrapper_outer">

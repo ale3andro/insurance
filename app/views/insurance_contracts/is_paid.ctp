@@ -1,6 +1,10 @@
 <!-- file /app/views/insurance_contracts/is_paid.ctp -->
 <?php 
-	echo $this->element("header", array( "activeTab" => 2 ));
+	if (($session->read('user'))!=null)
+		echo $this->element("header", array( "activeTab" => 2, "username" => $session->read('user')) ); 
+	else
+		echo $this->element("header", array( "activeTab" => 2) ); 
+
 	$this->set("title", (($status=="no")?"Απλήρωτα Ασφαλιστικά Συμβόλαια":"Πληρωμένα Ασφαλιστικά Συμβόλαια")); 
 ?>
 <div class="post">

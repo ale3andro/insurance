@@ -1,5 +1,10 @@
 <!-- File: /app/views/changes/edit.ctp -->	
-<?php echo $this->element("header", array( "activeTab" => 3) ); ?>
+<?php 
+	if (($session->read('user'))!=null)
+		echo $this->element("header", array( "activeTab" => 3, "username" => $session->read('user')) ); 
+	else
+		echo $this->element("header", array( "activeTab" => 3) ); 
+?>
 <div class="post">
 	<div class="post_title">
 		<h2>Διόρθωση Στοιχείων Οχήματος</h2></div>

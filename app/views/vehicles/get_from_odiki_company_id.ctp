@@ -1,6 +1,10 @@
 <!-- file /app/views/vehicles/get_from_odiki_company_id.ctp -->
 <?php 
-	echo $this->element("header", array( "activeTab" => 1) ); 
+	if (($session->read('user'))!=null)
+		echo $this->element("header", array( "activeTab" => 1, "username" => $session->read('user')) ); 
+	else
+		echo $this->element("header", array( "activeTab" => 1) ); 
+
 	$title = "Όλα τα Συμβόλαια Οδικής Βοήθειας" . (($company!=null)?" (" . $company['OdikiCompany']['description'] . ")":"");
 	$this->set("title", $title);
 ?>

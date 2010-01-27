@@ -1,6 +1,10 @@
 <!-- file /app/views/odiki_contracts/totals.ctp -->
 <?php 
-	echo $this->element("header", array( "activeTab" => -1) ); 
+	if (($session->read('user'))!=null)
+		echo $this->element("header", array( "activeTab" => -1, "username" => $session->read('user')) ); 
+	else
+		echo $this->element("header", array( "activeTab" => -1) ); 
+
 	$title = "Στατιστικά Συμβολαίων Οδικής Βοήθειας" . (($company!=null)?(" (" . $company['OdikiCompany']['description'] . ")"):"");
 	$this->set("title", $title);
 ?>

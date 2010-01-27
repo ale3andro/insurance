@@ -4,6 +4,13 @@
 		var $name="Vehicles";
 		var $paginate = array( 'limit' => 10, 'order' => array('Vehicle.last_name' => 'asc', 'Vehicle.first_name' => 'asc', 
 								'Vehicle.father_name' => 'asc', 'Vehicle.plate' => 'asc'));
+		
+		function beforeFilter()
+		{
+			//$this->Auth->deny();
+			$this->Auth->allow('index', 'search');
+		}
+		
 		/* fixed */
 		function index() /* ok */
 		{
@@ -292,7 +299,8 @@
 		
 		function backup()
 		{
-			/* backup the db OR just a table */
+			
+			/*
 			function backup_tables($host,$user,$pass,$name,$tables = '*')
 			{	
 				$link = mysql_connect($host,$user,$pass);
@@ -350,6 +358,7 @@
 			}
 			
 			backup_tables('localhost','root','root','insurance');
+			*/
 		}
 		function statistics() /* ok */
 		{

@@ -1,6 +1,10 @@
 <!-- file /app/views/vehicles/get_odiki_contracts_is_paid.ctp -->
 <?php 
-	echo $this->element("header", array( "activeTab" => 2 ));
+	if (($session->read('user'))!=null)
+		echo $this->element("header", array( "activeTab" => 2, "username" => $session->read('user')) ); 
+	else
+		echo $this->element("header", array( "activeTab" => 2) ); 
+
 	$title = (($status=="no")?"Απλήρωτα Συμβόλαια Οδικής Βοήθειας":"Πληρωμένα Συμβόλαια Οδικής Βοήθειας");
 	$this->set("title", $title); 
 ?>

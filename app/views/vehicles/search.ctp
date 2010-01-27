@@ -1,5 +1,10 @@
 <!-- File: /app/views/vehicles/search.ctp -->	
-<?php echo $this->element("header", array( "activeTab" => 5) ); ?>
+<?php 
+	if (($session->read('user'))!=null)
+		echo $this->element("header", array( "activeTab" => 5, "username" => $session->read('user')) ); 
+	else
+		echo $this->element("header", array( "activeTab" => 5) ); 
+?>
 <div class="post">
 	<div class="post_title"><h2><?php echo ((isset($vehicles))?"Αποτελέσματα Αναζήτησης":"Αναζήτηση"); ?></h2></div>
 	<div class="post_body">

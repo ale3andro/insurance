@@ -1,5 +1,10 @@
 <!-- file /app/views/insurance_companies/view.ctp -->
-<?php echo $this->element("header", array( "activeTab" => -1) ); ?>
+<?php 
+	if (($session->read('user'))!=null)
+		echo $this->element("header", array( "activeTab" => 1, "username" => $session->read('user')) ); 
+	else
+		echo $this->element("header", array( "activeTab" => 1) ); 
+?>
 <?php $this->set("title", $company['InsuranceCompany']['description']); ?>
 <div class="post">
 	<div class="post_title"><h2><?php echo $company['InsuranceCompany']['description']; ?></h2></div>

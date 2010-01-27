@@ -1,6 +1,10 @@
 <!-- file /app/views/vehicles/get_insurance_contracts_due.ctp -->
 <?php 
-	echo $this->element("header", array( "activeTab" => -1) ); 
+	if (($session->read('user'))!=null)
+		echo $this->element("header", array( "activeTab" => -1, "username" => $session->read('user')) ); 
+	else
+		echo $this->element("header", array( "activeTab" => -1) ); 
+
 	$title = "Συμβόλαια Ασφάλειας που λήγουν σε " . $numDays . " μέρες";
 	$this->set("title", $title);
 ?>

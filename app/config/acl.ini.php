@@ -57,18 +57,26 @@
 ; ---------------------------------------------------------------------
 
 ;-------------------------------------
-;Users
+;AROs
 ;-------------------------------------
 
-[username-goes-here]
-groups = group1, group2
-deny = aco1, aco2
-allow = aco3, aco4
+[ale3andro]
+groups = admin, user
+;deny = aco1, aco2
+allow = vehicles
+
+[anonymous]
+groups = guest
+deny = allow
 
 ;-------------------------------------
-;Groups
+;ARO Groups
 ;-------------------------------------
 
-[groupname-goes-here]
+[admin]
+deny = aco5, aco6
+allow = aco7, aco8
+
+[user]
 deny = aco5, aco6
 allow = aco7, aco8

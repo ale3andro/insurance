@@ -1,6 +1,10 @@
 <!-- file /app/views/vehicles/without_odiki.ctp -->
 <?php 
-	echo $this->element("header", array( "activeTab" => 1) ); 
+	if (($session->read('user'))!=null)
+		echo $this->element("header", array( "activeTab" => 1, "username" => $session->read('user')) ); 
+	else
+		echo $this->element("header", array( "activeTab" => 1) ); 
+
 	$title = "Οχήματα χωρίς Οδική Βοήθεια";
 	$this->set("title", $title);
 ?>

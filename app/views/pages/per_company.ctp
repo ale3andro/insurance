@@ -1,6 +1,11 @@
-<?php $this->set("title", "Διαχείριση Ασφαλιστικών Συμβολαίων - Γ. Μάνθου"); ?>
 <?php 
-	echo $this->element("header", array( "activeTab" => 4) ); 
+	$this->set("title", "Διαχείριση Ασφαλιστικών Συμβολαίων - Γ. Μάνθου");
+
+	if (($session->read('user'))!=null)
+		echo $this->element("header", array( "activeTab" => 4, "username" => $session->read('user')) ); 
+	else
+		echo $this->element("header", array( "activeTab" => 4) ); 
+
 	$title = "Συνεργαζόμενες Εταιρίες";
 	$this->set("title", $title);
 ?>

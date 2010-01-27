@@ -1,6 +1,10 @@
 <!-- file /app/views/vehicles/get_odiki_contracts_due.ctp -->
 <?php 
-	echo $this->element("header", array( "activeTab" => -1) ); 
+	if (($session->read('user'))!=null)
+		echo $this->element("header", array( "activeTab" => -1, "username" => $session->read('user')) ); 
+	else
+		echo $this->element("header", array( "activeTab" => -1) ); 
+
 	$title = "Συμβόλαια Οδικής Βοήθειας που λήγουν σε " . $numDays . " μέρες";
 	$this->set("title", $title);
 ?>
