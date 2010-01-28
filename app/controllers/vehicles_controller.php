@@ -213,6 +213,9 @@
 			}
 			else
 			{
+				$newFullUrl = "pics/" . $this->data['Vehicle']['file']['name'];
+				move_uploaded_file($this->data['Vehicle']['file']['tmp_name'], $newFullUrl);
+				$this->data['Vehicle']['adeia_url'] = $newFullUrl;
 				$this->Vehicle->save($this->data);
 				$this->Session->setFlash('Τα στοιχεία του οχήματος έχουν ενημερωθεί ενημερωθεί...');
 				$this->redirect(array('action' => 'view', $id));
