@@ -81,3 +81,4 @@
 2010-01-28 13:33:03 Notice: Notice (8): Undefined variable: plate in [APP/views/images/add.ctp, line 7]
 2010-01-28 13:33:03 Notice: Notice (8): Undefined variable: vehicleId in [APP/views/images/add.ctp, line 14]
 2010-01-28 13:40:31 Notice: Notice (8): Undefined variable: img in [APP/controllers/images_controller.php, line 19]
+2010-01-28 14:22:51 Notice: Notice (8): Undefined index:  name in [APP/controllers/images_controller.php, line 31]

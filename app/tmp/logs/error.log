@@ -168,3 +168,4 @@
 2010-01-28 12:18:04 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/insurance/cake/basics.php:109) in [CORE/cake/libs/controller/controller.php, line 644]
 2010-01-28 13:21:37 Warning: Warning (512): Method HtmlHelper::set does not exist in [CORE/cake/libs/view/helper.php, line 143]
 2010-01-28 13:40:32 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/insurance/cake/basics.php:109) in [CORE/cake/libs/controller/controller.php, line 644]
+2010-01-28 14:22:51 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/insurance/cake/basics.php:109) in [CORE/cake/libs/controller/controller.php, line 644]

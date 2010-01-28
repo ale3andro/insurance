@@ -28,12 +28,21 @@
 			
 			if (!empty($this->data)) 
 			{
+				$pos = strrpos($this->data['Image']['file']['name'], ".");
+				if ($pos==false)
+				{
+					$this->Session->setFlash('Δεν είναι δυνατόν να επισυνάψετε αρχείο χωρίς επέκταση');
+					$this->redirect(array('controller' => 'vehicles', 'action' => 'view', $vehicleId));
+				}
+				$extension = substr($this->data['Image']['file']['name'], $pos);
+				
 				$this->data['Image']['vehicle_id'] = $vehicleId;
 				$plateEN = $this->makeEnglish($vehicle['Vehicle']['plate']);
 				
 				$imgs = $this->requestAction("/images/getFromVehicle/" . $vehicleId);
 				
-				$newFullUrl = "pics/" . (($imgs==null)?"0":count($imgs)) . "_" . $plateEN;
+				$newFullUrl = "pics/" . $plateEN . "_" . (($imgs==null)?"0":count($imgs)) . "_" . $extension;
+				// CHECK IF_FILE_EXISTS
 				if (move_uploaded_file($this->data['Image']['file']['tmp_name'], $newFullUrl))
 				{
 					$this->data['Image']['url'] = $newFullUrl;
