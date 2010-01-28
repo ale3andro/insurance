@@ -17,10 +17,15 @@
 			echo "<p>Αριθμός Πινακίδας: " . $vehicle['Vehicle']['plate'] . "</p>";
 			if ($images!=null)
 			{
+				$i=1;
 				echo "<p>Επισυναπτόμενα αρχεία:</p><ol>";
 				foreach ($images as $image)
-					echo "<li>" . $html->link($image['Image']['description'], "/" . $image['Image']['url'],
-								array('target' => '_blank')) . "</li>";
+				{
+					echo "<li>" . $html->link( (($image['Image']['description']=="")?("Επισυναπτόμενο " . $i):$image['Image']['description']), "/" . $image['Image']['url'],
+								array('target' => '_blank')) . " : ";
+					echo "<a href=\"" .  $html->webroot . "images/delete/" . $image['Image']['id'] . "/" . $vehicle['Vehicle']['id'] . "\" 
+								onclick=\"return confirm('Είστε σίγουρος ότι θέλετε να διαγράψετε αυτή την επισύναψη;');\">Διαγραφή επισύναψης</a></li>";
+				}
 				echo "</ol>";
 			}
 			echo "<p>" . $html->link("Προσθήκη επισύναψης", "/images/add/" . $vehicle['Vehicle']['id']) . "</p>";

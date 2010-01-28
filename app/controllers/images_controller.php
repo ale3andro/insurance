@@ -2,9 +2,19 @@
 	class ImagesController extends AppController
 	{
 		var $name="Images";
-		function index() /* ok */
+		function delete($id, $vehicleId)
 		{
-			echo "ok";
+			if ( (!isset($vehicleId)) || (!isset($vehicleId)) )
+				$this->cakeError('error404');
+			
+			$image = $this->Image->findById($id);
+			if ($image==null)
+				$this->cakeError('error404');
+		
+			unlink($image['Image']['url']);				
+			$this->Image->del($id);
+			
+			$this->flash('Η επισύναψη διαγράφηκε επιτυχώς...', "/vehicles/view/" . $vehicleId, FLASH_TIMEOUT);
 		}
 		
 		function getFromVehicle($vehicleId)
@@ -30,32 +40,26 @@
 			{
 				$pos = strrpos($this->data['Image']['file']['name'], ".");
 				if ($pos==false)
-				{
-					$this->Session->setFlash('Δεν είναι δυνατόν να επισυνάψετε αρχείο χωρίς επέκταση');
-					$this->redirect(array('controller' => 'vehicles', 'action' => 'view', $vehicleId));
-				}
-				$extension = substr($this->data['Image']['file']['name'], $pos);
-				
-				$this->data['Image']['vehicle_id'] = $vehicleId;
-				$plateEN = $this->makeEnglish($vehicle['Vehicle']['plate']);
-				
-				$imgs = $this->requestAction("/images/getFromVehicle/" . $vehicleId);
-				
-				$newFullUrl = "pics/" . $plateEN . "_" . (($imgs==null)?"0":count($imgs)) . "_" . $extension;
-				// CHECK IF_FILE_EXISTS
-				if (move_uploaded_file($this->data['Image']['file']['tmp_name'], $newFullUrl))
-				{
-					$this->data['Image']['url'] = $newFullUrl;
-					if ($this->Image->save($this->data)) 
-					{
-						$this->Session->setFlash('Η επισύναψη έχει αποθηκευτεί...');
-						$this->redirect(array('controller' => 'vehicles', 'action' => 'view', $vehicleId));
-					}
-				}
+					$this->flash('Δεν είναι δυνατόν να επισυνάψετε αρχείο χωρίς επέκταση...', "/vehicles/view/" . $vehicleId, FLASH_TIMEOUT);
 				else
 				{
-					$this->Session->setFlash('Πρόβλημα κατά την επισύναψη... Επικοινωνήστε με την τεχνική υποστήριξη.');
-					$this->redirect(array('controller' => 'vehicles', 'action' => 'view', $vehicleId));
+					$extension = substr($this->data['Image']['file']['name'], $pos);
+				
+					$this->data['Image']['vehicle_id'] = $vehicleId;
+					$plateEN = $this->makeEnglish($vehicle['Vehicle']['plate']);
+				
+					$newFullUrl = "pics/" . $plateEN . "_" . mktime() . "_" . $extension;
+					// CHECK IF_FILE_EXISTS
+					if (move_uploaded_file($this->data['Image']['file']['tmp_name'], $newFullUrl))
+					{
+						$this->data['Image']['url'] = $newFullUrl;
+						if ($this->Image->save($this->data)) 
+							$this->flash('Η επισύναψη έχει αποθηκευτεί...', "/vehicles/view/" . $vehicleId, FLASH_TIMEOUT);
+						else
+							$this->flash('Πρόβλημα κατά την επισύναψη... Επικοινωνήστε με την τεχνική υποστήριξη (images/add Κωδ01)...', "/vehicles/view/" . $vehicleId, FLASH_TIMEOUT);
+					}
+					else
+						$this->flash('Πρόβλημα κατά την επισύναψη... Επικοινωνήστε με την τεχνική υποστήριξη (images/add Κωδ02)...', "/vehicles/view/" . $vehicleId, FLASH_TIMEOUT);
 				}
 			}
 			else

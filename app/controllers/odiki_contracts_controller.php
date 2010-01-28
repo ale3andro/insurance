@@ -58,8 +58,7 @@
 				if ($this->OdikiContract->save($this->data)) 
 				{
 					$this->requestAction("/vehicles/setOdikiContractId/" . $vehicleId . "/" . $this->OdikiContract->id);					
-					$this->Session->setFlash('Το συμβόλαιο έχει αποθηκευτεί...');
-					$this->redirect(array('controller' => 'vehicles', 'action' => 'view', $vehicleId));
+					$this->flash("Το συμβόλαιο έχει αποθηκευτεί...", "/vehicles/view/" . $vehicleId, FLASH_TIMEOUT);
 				}
 			}
 			else
@@ -91,8 +90,7 @@
 			else
 			{
 				$this->OdikiContract->save($this->data);
-				$this->Session->setFlash('Το συμβόλαιο έχει ενημερωθεί...');
-				$this->redirect(array('action' => 'view', $id));
+				$this->flash('Το συμβόλαιο έχει ενημερωθεί...', "/odikiContracts/view/" . $id, FLASH_TIMEOUT);
 			}
 		}
 		/* fixed */
@@ -105,8 +103,7 @@
 			$this->data['OdikiContract']['is_paid'] = 1;
 			$this->OdikiContract->save($this->data);
 			$this->pageTitle = "Πληρωμή Συμβολαίου";
-			$this->Session->setFlash('Το συμβόλαιο έχει πληρωθεί...');
-			$this->redirect(array('action' => 'view', $id));
+			$this->flash("Το συμβόλαιο έχει πληρωθεί...", "/odikiContracts/view/" . $id, FLASH_TIMEOUT);
 		}
 		/* fixed */
 		function unpay($id) /* ok */
@@ -118,8 +115,7 @@
 			$this->data['OdikiContract']['is_paid'] = 0;
 			$this->OdikiContract->save($this->data);
 			$this->pageTitle = "Πληρωμή Συμβολαίου";
-			$this->Session->setFlash('Η αναίρεση πληρωμής ολοκληρώθηκε...');
-			$this->redirect(array('action' => 'view', $id));
+			$this->flash('Η αναίρεση πληρωμής ολοκληρώθηκε...', "/odikiContracts/view/" . $id, FLASH_TIMEOUT);
 		}
 	
 		function delete($id) /* ok */
@@ -131,7 +127,7 @@
 				$vehicle = $this->requestAction("/vehicles/getFromOdikiId/" . $id);
 				$this->requestAction("vehicles/setOdikiContractId/" . $vehicle['Vehicle']['id'] . "/0");
 				$this->OdikiContract->del($id);
-				$this->redirect(array('controller' => 'vehicles', 'action' => 'view', $vehicle['Vehicle']['id']));
+				$this->flash('Το συμβόλαιο διαγράφηκε επιτυχώς...', "/vehicles/view/" . $vehicle['Vehicle']['id'], FLASH_TIMEOUT);
 			}
 		}
 		function isPaid($status="no") /* ok */

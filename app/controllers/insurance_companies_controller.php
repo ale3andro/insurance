@@ -27,10 +27,7 @@
 			if (!empty($this->data)) 
 			{
 				if ($this->InsuranceCompany->save($this->data)) 
-				{
-					$this->Session->setFlash('Η ασφαλιστική εταιρία έχει αποθηκευτεί...');
-					$this->redirect(array('action' => 'index'));
-				}
+					$this->flash('Η ασφαλιστική εταιρία έχει αποθηκευτεί...', '/insuranceCompanies', FLASH_TIMEOUT);
 			}
 			else
 				$this->pageTitle = "Προσθήκη Ασφαλιστικής Εταιρίας";
@@ -53,8 +50,7 @@
 			else
 			{
 				$this->InsuranceCompany->save($this->data);
-				$this->Session->setFlash('Τα στοιχεία της Ασφαλιστικής Εταιρίας έχουν ενημερωθεί...');
-				$this->redirect(array('action' => 'index'));
+				$this->flash('Τα στοιχεία της Ασφαλιστικής Εταιρίας έχουν ενημερωθεί...', '/insuranceCompanies/view/' . $id, FLASH_TIMEOUT);
 			}
 		}
 		

@@ -166,6 +166,8 @@
 		
 		function delete($id) /* ok */
 		{
+			if (!isset($id))
+				$this->cakeError('error404');
 			$vehicle = $this->Vehicle->findById($id);
 			if ($vehicle==null)
 				$this->cakeError('error404');
@@ -212,12 +214,9 @@
 				$this->data = $this->Vehicle->read();	
 			}
 			else
-			{
-				
-				
+			{				
 				$this->Vehicle->save($this->data);
-				$this->Session->setFlash('Τα στοιχεία του οχήματος έχουν ενημερωθεί ενημερωθεί...');
-				$this->redirect(array('action' => 'view', $id));
+				$this->flash("Τα στοιχεία του οχήματος έχουν ενημερωθεί ενημερωθεί...", "/vehicles/view/" . $id, FLASH_TIMEOUT);
 			}
 		}
 		
@@ -228,19 +227,14 @@
 			if (!empty($this->data)) 
 			{
 				if ( ($this->data['Vehicle']['plate']=="") || ($this->data['Vehicle']['last_name']=="") )
-				{
-					$this->flash("Θα πρέπει να καταχωρηθεί τουλάχιστον το Επώνυμο και ο Αριθμός Πινακίδας",
-								"/vehicles/add", 3);
-				}
-				
+					$this->flash("Θα πρέπει να καταχωρηθεί τουλάχιστον το Επώνυμο και ο Αριθμός Πινακίδας", "/vehicles/add", FLASH_TIMEOUT);
 				else
 				{
 					if ($this->Vehicle->save($this->data)) 
-					{
-						$this->Session->setFlash('Το όχημα έχει αποθηκευτεί...');
-						$this->redirect(array('action' => 'view',  $this->Vehicle->id));
-					}
-				}
+						$this->flash("Το όχημα έχει αποθηκευτεί...", "/vehicles/view/" . $this->Vehicle->id, FLASH_TIMEOUT);
+					else
+						$this->flash("Αδυναμία αποθήκευσης οχήματος. Επικοινωνήστε με την τεχνική υποστήριξη (vehicles/add Κωδ 01)...", "/vehicles", FLASH_TIMEOUT);
+				}	
 			}
 		}
 		

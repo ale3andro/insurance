@@ -28,10 +28,7 @@
 			if (!empty($this->data)) 
 			{
 				if ($this->OdikiCompany->save($this->data)) 
-				{
-					$this->Session->setFlash('Η εταιρία οδικής έχει αποθηκευτεί...');
-					$this->redirect(array('action' => 'index'));
-				}
+					$this->flash('Η εταιρία οδικής έχει αποθηκευτεί...', '/odikiCompanies', FLASH_TIMEOUT);
 			}
 			else
 				$this->pageTitle = "Προσθήκη Εταιρίας Οδικής Βοήθειας";
@@ -54,8 +51,7 @@
 			else
 			{
 				$this->OdikiCompany->save($this->data);
-				$this->Session->setFlash('Τα στοιχεία της Εταιρίας Οδικής Βοήθειας έχουν ενημερωθεί...');
-				$this->redirect(array('action' => 'index'));
+				$this->flash('Τα στοιχεία της Εταιρίας Οδικής Βοήθειας έχουν ενημερωθεί...', '/odikiCompanies/view/' . $id, FLASH_TIMEOUT);
 			}
 		}
 		

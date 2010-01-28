@@ -38,7 +38,7 @@
  * In production mode, flash messages redirect after a time interval.
  * In development mode, you need to click the flash message to continue.
  */
-	Configure::write('debug', 3);
+	Configure::write('debug', 0);
 /**
  * Application wide charset encoding
  */
@@ -226,4 +226,6 @@
  *
  */
 	Cache::config('default', array('engine' => 'File'));
+	
+	define('FLASH_TIMEOUT', 1);
 ?>
