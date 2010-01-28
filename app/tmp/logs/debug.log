@@ -76,3 +76,8 @@
 2010-01-27 13:33:10 Notice: Notice (8): Undefined variable: return in [APP/controllers/vehicles_controller.php, line 332]
 2010-01-27 13:33:10 Notice: Notice (8): Undefined variable: return in [APP/controllers/vehicles_controller.php, line 332]
 2010-01-27 13:33:22 Notice: Notice (8): Undefined variable: return in [APP/controllers/vehicles_controller.php, line 332]
+2010-01-28 13:32:42 Notice: Notice (8): Undefined variable: plate in [APP/views/images/add.ctp, line 7]
+2010-01-28 13:32:42 Notice: Notice (8): Undefined variable: vehicleId in [APP/views/images/add.ctp, line 14]
+2010-01-28 13:33:03 Notice: Notice (8): Undefined variable: plate in [APP/views/images/add.ctp, line 7]
+2010-01-28 13:33:03 Notice: Notice (8): Undefined variable: vehicleId in [APP/views/images/add.ctp, line 14]
+2010-01-28 13:40:31 Notice: Notice (8): Undefined variable: img in [APP/controllers/images_controller.php, line 19]

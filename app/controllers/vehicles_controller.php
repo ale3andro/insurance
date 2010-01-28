@@ -213,9 +213,8 @@
 			}
 			else
 			{
-				$newFullUrl = "pics/" . $this->data['Vehicle']['file']['name'];
-				move_uploaded_file($this->data['Vehicle']['file']['tmp_name'], $newFullUrl);
-				$this->data['Vehicle']['adeia_url'] = $newFullUrl;
+				
+				
 				$this->Vehicle->save($this->data);
 				$this->Session->setFlash('Τα στοιχεία του οχήματος έχουν ενημερωθεί ενημερωθεί...');
 				$this->redirect(array('action' => 'view', $id));
@@ -298,6 +297,8 @@
 			if ($odikiContract!=null)
 				$this->set("odikiCompany", $this->requestAction("/odikiCompanies/get/" . 
 							$odikiContract['OdikiContract']['company_id']));
+							
+			$this->set("images", $this->requestAction("/images/getFromVehicle/" . $id));
 		}		
 		
 		function backup()

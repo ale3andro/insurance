@@ -57,7 +57,7 @@
 				if ($this->InsuranceContract->save($this->data)) 
 				{
 					$this->requestAction("/vehicles/setInsuranceContractId/" . $vehicleId . "/" . $this->InsuranceContract->id);					
-					$this->Session->setFlash('Το συμβάλαιο έχει αποθηκευτεί...');
+					$this->Session->setFlash('Το συμβόλαιο έχει αποθηκευτεί...');
 					$this->redirect(array('controller' => 'vehicles', 'action' => 'view', $vehicleId));
 				}
 			}

@@ -15,7 +15,6 @@
 			echo $form->input('last_name', array('label' => 'Επώνυμο:'));
 			echo $form->input('father_name', array('label' => 'Όνομα Πατέρα:'));
 			echo $form->input('plate', array('label' => 'Αριθμός Πινακίδας:'));
-			echo $form->file('file');
 			echo $form->end('Διόρθωση');
 		?>		
 	</div>

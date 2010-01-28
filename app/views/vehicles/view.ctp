@@ -15,6 +15,14 @@
 			echo "<p>Ονοματεπώνυμο: " . $vehicle['Vehicle']['first_name'] . " " . $vehicle['Vehicle']['last_name'] . "</p>";
 			echo "<p>Όνομα Πατέρα: " . $vehicle['Vehicle']['father_name'] . "</p>";
 			echo "<p>Αριθμός Πινακίδας: " . $vehicle['Vehicle']['plate'] . "</p>";
+			if ($images!=null)
+			{
+				echo "<p>Επισυναπτόμενα αρχεία:</p><ol>";
+				foreach ($images as $image)
+					echo "<li>" . $html->link($image['Image']['description'], "/" . $image['Image']['url'] .".png",
+								array('target' => '_blank')) . "</li>";
+				echo "</ol>";
+			}
 			echo "<p>" . $html->link("Διόρθωση στοιχείων οχήματος", "/vehicles/edit/" . $vehicle['Vehicle']['id']) . "</p>";
 			echo "<p><a href=\"" .  $html->webroot . "vehicles/delete/" . $vehicle['Vehicle']['id'] . "\" 
 								onclick=\"return confirm('Είστε σίγουρος ότι θέλετε να διαγράψετε τα στοιχεία και τις ασφάλειες αυτού του οχήματος;');\">Διαγραφή Οχήματος και Ασφαλειών του</a>";

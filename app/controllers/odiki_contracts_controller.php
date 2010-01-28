@@ -58,7 +58,7 @@
 				if ($this->OdikiContract->save($this->data)) 
 				{
 					$this->requestAction("/vehicles/setOdikiContractId/" . $vehicleId . "/" . $this->OdikiContract->id);					
-					$this->Session->setFlash('Το συμβάλαιο έχει αποθηκευτεί...');
+					$this->Session->setFlash('Το συμβόλαιο έχει αποθηκευτεί...');
 					$this->redirect(array('controller' => 'vehicles', 'action' => 'view', $vehicleId));
 				}
 			}
