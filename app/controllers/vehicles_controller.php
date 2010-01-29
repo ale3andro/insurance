@@ -351,13 +351,17 @@
 				fwrite($handle,$return);
 				fclose($handle);
 				
-				$zip = new ZipArchive();
-				$zip->open(SAVE_DIRECTORY . $newFileName . ".zip", ZIPARCHIVE::OVERWRITE);
-				$zip->addFile(SAVE_DIRECTORY . $newFileName, $newFileName);
-				$zip->close();
-				unlink(SAVE_DIRECTORY . $newFileName);
-				
-				return SAVE_DIRECTORY . $newFileName . ".zip";
+				if (extension_loaded("zip"))
+				{
+					$zip = new ZipArchive();
+					$zip->open(SAVE_DIRECTORY . $newFileName . ".zip", ZIPARCHIVE::OVERWRITE);
+					$zip->addFile(SAVE_DIRECTORY . $newFileName, $newFileName);
+					$zip->close();
+					unlink(SAVE_DIRECTORY . $newFileName);
+					return SAVE_DIRECTORY . $newFileName . ".zip";
+				}
+				else
+					return SAVE_DIRECTORY . $newFileName;
 			}
 			$this->set("filename", backup_tables('localhost','root','root','insurance'));
 		}
