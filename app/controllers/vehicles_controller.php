@@ -372,6 +372,9 @@
 				if ($vehicle['Vehicle']['odiki_contract_id']!=0)
 					$numOdiki++;
 			}
+			
+			$this->set('insuranceContractsFromDB', $this->requestAction("/insuranceContracts/statistics"));
+			$this->set('odikiContractsFromDB', $this->requestAction("/odikiContracts/statistics"));
 			$this->set('num', $num);
 			$this->set('numInsured', $numInsured);
 			$this->set('numOdiki', $numOdiki);

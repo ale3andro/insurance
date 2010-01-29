@@ -23,8 +23,12 @@
 				echo "<tr><td>Με οδική βοήθεια</td><td>" . $numOdiki . "</td></tr>";
 				echo "<tr><td>" . $html->link("Χωρίς οδική βοήθεια", "/vehicles/withoutOdiki") . "</td><td>" . ($num-$numOdiki) . "</td></tr>";
 				echo "<tr><td>Σύνολο Οχημάτων</td><td>" . $num . "</td></tr>";
-				echo "</table>";
-				//echo "<br />" . $html->link("Προβολή Συμβολαίων", "/vehicles/getFromInsuranceCompanyId/" . $company['InsuranceCompany']['id']);
+				echo "</table><br />";
+				
+				if ( ($insuranceContractsFromDB == $numInsured) && ($odikiContractsFromDB == $numOdiki) )
+					echo "Ολοκληρώθηκε ο έλεγχος στην Βάση Δεδομένων και δεν εντοπίστηκαν προβλήματα...";
+				else
+					echo "<p style=\"color:red\">ΠΡΟΒΛΗΜΑ ΣΥΓΧΡΟΝΙΣΜΟΥ ΤΗΣ ΒΑΣΗΣ ΔΕΔΟΜΕΝΩΝ ΕΠΙΚΟΙΝΩΝΗΣΤΕ ΜΕ ΤΗΝ ΤΕΧΝΙΚΗ ΥΠΟΣΤΗΡΙΞΗ ΤΟ ΣΥΝΤΟΜΟΤΕΡΟ!!!</p>";
 			}
 		?>		
 	</div>

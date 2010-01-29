@@ -175,6 +175,10 @@
 					$unpaidSum += $contract['InsuranceContract']['amount'];
 				}
 			}
+			
+			if (isset($this->params['requested']))
+				return $paidContracts+$unpaidContracts;
+			
 			$this->set("paidContracts", $paidContracts);
 			$this->set("paidSum", $paidSum);
 			$this->set("unpaidContracts", $unpaidContracts);

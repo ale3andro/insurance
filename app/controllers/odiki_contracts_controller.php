@@ -177,6 +177,9 @@
 					$unpaidSum += $contract['OdikiContract']['amount'];
 				}
 			}
+			if (isset($this->params['requested']))
+				return $paidContracts+$unpaidContracts;
+				
 			$this->set("paidContracts", $paidContracts);
 			$this->set("paidSum", $paidSum);
 			$this->set("unpaidContracts", $unpaidContracts);
