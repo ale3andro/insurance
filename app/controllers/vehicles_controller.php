@@ -346,11 +346,18 @@
 				}
 	
 				//save file
-				$newFileName = 'pics/db-backup_' . date('Y-m-d') . '_' .  mktime() . '_.sql';
-				$handle = fopen($newFileName, 'w+');
+				$newFileName = 'db-backup_' . date('Y-m-d') . '_' .  mktime() . '_.sql';
+				$handle = fopen(SAVE_DIRECTORY . $newFileName, 'w+');
 				fwrite($handle,$return);
 				fclose($handle);
-				return $newFileName;
+				
+				$zip = new ZipArchive();
+				$zip->open(SAVE_DIRECTORY . $newFileName . ".zip", ZIPARCHIVE::OVERWRITE);
+				$zip->addFile(SAVE_DIRECTORY . $newFileName, $newFileName);
+				$zip->close();
+				unlink(SAVE_DIRECTORY . $newFileName);
+				
+				return SAVE_DIRECTORY . $newFileName . ".zip";
 			}
 			$this->set("filename", backup_tables('localhost','root','root','insurance'));
 		}

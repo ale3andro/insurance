@@ -228,4 +228,5 @@
 	Cache::config('default', array('engine' => 'File'));
 	
 	define('FLASH_TIMEOUT', 1);
+	define('SAVE_DIRECTORY', 'pics/');
 ?>
