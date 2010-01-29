@@ -297,8 +297,6 @@
 		
 		function backup()
 		{
-			
-			/*
 			function backup_tables($host,$user,$pass,$name,$tables = '*')
 			{	
 				$link = mysql_connect($host,$user,$pass);
@@ -325,7 +323,7 @@
 					$result = mysql_query('SELECT * FROM '.$table);
 					$num_fields = mysql_num_fields($result);
 					
-					$return.= 'DROP TABLE '.$table.';';
+					$return.= 'DROP TABLE IF EXISTS '.$table.';';
 					$row2 = mysql_fetch_row(mysql_query('SHOW CREATE TABLE '.$table));
 					$return.= "\n\n".$row2[1].";\n\n";
 			
@@ -348,15 +346,13 @@
 				}
 	
 				//save file
-				$handle = fopen('db-backup-'.time().'-'.(md5(implode(',',$tables))).'.sql','w+');
+				$newFileName = 'pics/db-backup_' . date('Y-m-d') . '_' .  mktime() . '_.sql';
+				$handle = fopen($newFileName, 'w+');
 				fwrite($handle,$return);
 				fclose($handle);
-				echo getcwd() . "<br />";
-				echo $return;
+				return $newFileName;
 			}
-			
-			backup_tables('localhost','root','root','insurance');
-			*/
+			$this->set("filename", backup_tables('localhost','root','root','insurance'));
 		}
 		function statistics() /* ok */
 		{

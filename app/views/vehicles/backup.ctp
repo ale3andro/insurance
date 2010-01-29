@@ -11,7 +11,8 @@
 	<div class="post_title"><h2><?php echo $title; ?></h2></div>
 	<div class="post_body">
 		<?php
-			echo "Το backup ολοκληρώθηκε επιτυχώς";
+			echo "Το backup ολοκληρώθηκε επιτυχώς.. <br />";
+			echo $html->link("Λήψη του αρχείου", "/" . 	$filename, array('target' => '_blank'));			
 		?>		
 	</div>
 </div>
