@@ -68,6 +68,7 @@
 					$this->cakeError('error404');
 				$this->set('vehicleId', $vehicleId);
 				$this->set('odikiCompaniesSelect', $this->requestAction("/odikiCompanies/createSelect/"));
+				$this->set('vehicle', $vehicle);
 			}
 		}
 		
@@ -76,6 +77,9 @@
 		{
 			if (!isset($id))
 				$this->cakeError('error404');
+			
+			$this->InsuranceContract->id = $id;
+			$vehicle = $this->requestAction("/vehicles/getFromOdikiId/" . $id);
 				
 			$this->OdikiContract->id = $id;
 			
@@ -86,6 +90,7 @@
 					$this->cakeError('error404');
 				$this->set('odikiCompaniesSelect', 
 						$this->requestAction("/odikiCompanies/createSelect/" . $this->data['OdikiContract']['company_id']));
+				$this->set('vehicle', $vehicle);
 			}
 			else
 			{

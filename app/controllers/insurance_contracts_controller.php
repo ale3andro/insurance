@@ -67,6 +67,7 @@
 					$this->cakeError('error404');
 				$this->set('vehicleId', $vehicleId);
 				$this->set('insuranceCompaniesSelect', $this->requestAction("/insuranceCompanies/createSelect/"));
+				$this->set('vehicle', $vehicle);
 			}
 		}
 		
@@ -76,6 +77,9 @@
 			if (!isset($id))
 				$this->cakeError('error404');
 			$this->InsuranceContract->id = $id;
+			$vehicle = $this->requestAction("/vehicles/getFromInsuranceId/" . $id);
+			if ($vehicle==null)
+				$this->cakeError('error404');
 			
 			if (empty($this->data))
 			{
@@ -84,6 +88,7 @@
 					$this->cakeError('error404');
 				$this->set('insuranceCompaniesSelect', 
 						$this->requestAction("/insuranceCompanies/createSelect/" . $this->data['InsuranceContract']['company_id']));
+				$this->set('vehicle', $vehicle);
 			}
 			else
 			{

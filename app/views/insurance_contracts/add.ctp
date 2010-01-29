@@ -4,9 +4,11 @@
 		echo $this->element("header", array( "activeTab" => -1, "username" => $session->read('user')) ); 
 	else
 		echo $this->element("header", array( "activeTab" => -1) ); 
+	$title = "Δροσθήκη Συμβολαίου Ασφάλειας (" . $vehicle['Vehicle']['plate'] . ")";
+	$this->set("title", $title);
 ?>
 <div class="post">
-	<div class="post_title"><h2>Προσθήκη Συμβολαίου Ασφάλειας</h2></div>
+	<div class="post_title"><h2><?php echo $title; ?></h2></div>
 	<div class="post_body">
 		<?php
 			echo $form->create('InsuranceContract', array('url' => 'add/' . $vehicleId));

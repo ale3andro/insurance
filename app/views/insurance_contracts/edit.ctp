@@ -3,11 +3,13 @@
 	if (($session->read('user'))!=null)
 		echo $this->element("header", array( "activeTab" => -1, "username" => $session->read('user')) ); 
 	else
-		echo $this->element("header", array( "activeTab" => -1) ); 
+		echo $this->element("header", array( "activeTab" => -1) );
+	$title = "Διόρθωση Στοιχείων Συμβολαίου (" . $vehicle['Vehicle']['plate'] . ")";
+	$this->set("title", $title);
 ?>
 <div class="post">
 	<div class="post_title">
-		<h2>Διόρθωση Στοιχείων Συμβολαίου</h2></div>
+		<h2><?php echo $title; ?></h2></div>
 	<div class="post_body">
 		<?php
 			echo $form->create('InsuranceContract', array('action' => 'edit'));
