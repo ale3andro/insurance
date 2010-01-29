@@ -18,6 +18,12 @@ class AppController extends Controller {
 		
 		$this->Auth->authError = 'Παρακαλώ δώστε τα στοιχεία σας ...';
 		$this->Auth->loginError = 'Λάθος συνδυσμός ονόματος χρήστη / κωδικού πρόσβασης.';
+		
+		if ($this->Auth->user())
+		{
+				$this->set("username", $this->Auth->user('username'));
+				$this->Session->write('user', $this->Auth->user('username'));
+		}
 	}	
 	
 	function makeEnglish($string)

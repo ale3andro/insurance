@@ -6,11 +6,7 @@
  
 		function login() 
 		{
-			if ($this->Auth->user())
-			{
-				$this->set("username", $this->Auth->user('username'));
-				$this->Session->write('user', $this->Auth->user('username'));
-			}
+
 		}
 
 		function logout() 
