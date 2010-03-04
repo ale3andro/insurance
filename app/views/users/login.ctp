@@ -20,8 +20,7 @@
 				echo $form->end('Login', array('label' => 'Είσοδος'));
 			}
 			else
-				echo "Έχεις ήδη κάνει login " . $username . "<br />" . $html->link("Αποσύνδεση", "/users/logout");
-				
+				echo "Έχεις ήδη κάνει login " . $username . "<br />" . $html->link("Αποσύνδεση", "/users/logout");	
 		?>		
 	</div>
 </div>
