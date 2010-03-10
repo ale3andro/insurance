@@ -181,6 +181,20 @@
 			$this->redirect(array('action' => 'index'));
 		}
 		
+		function uniquePlate($plate)
+		{
+			if (isset($this->params['requested']))
+			{
+				if (!isset($plate))
+					$this->cakeError('error404');
+				
+				$res = $this->Vehicle->find('first', array('conditions' => array('Vehicle.plate' => $plate)));
+				return $res;
+			}
+			else
+				$this->cakeError('error404');			
+		}
+		
 		/* fixed */
 		function search() /* ok */
 		{
@@ -230,10 +244,18 @@
 					$this->flash("Θα πρέπει να καταχωρηθεί τουλάχιστον το Επώνυμο και ο Αριθμός Πινακίδας", "/vehicles/add", FLASH_TIMEOUT);
 				else
 				{
-					if ($this->Vehicle->save($this->data)) 
-						$this->flash("Το όχημα έχει αποθηκευτεί...", "/vehicles/view/" . $this->Vehicle->id, FLASH_TIMEOUT);
+					$thePlate = $this->requestAction('vehicles/uniquePlate/' . $this->data['Vehicle']['plate']);
+					if (!$thePlate)
+					{
+						if ($this->Vehicle->save($this->data)) 
+							$this->flash("Το όχημα έχει αποθηκευτεί...", "/vehicles/view/" . $this->Vehicle->id, FLASH_TIMEOUT);
+						else
+							$this->flash("Αδυναμία αποθήκευσης οχήματος. Επικοινωνήστε με την τεχνική υποστήριξη (vehicles/add Κωδ 01)...", "/vehicles", FLASH_TIMEOUT);
+					}
 					else
-						$this->flash("Αδυναμία αποθήκευσης οχήματος. Επικοινωνήστε με την τεχνική υποστήριξη (vehicles/add Κωδ 01)...", "/vehicles", FLASH_TIMEOUT);
+						$this->flash("Το όχημα με αριθμό πινακίδας " . $this->data['Vehicle']['plate'] . 
+										" είναι ήδη αποθηκευμένο στην εφαρμογή", "/vehicles/view/"
+										. $thePlate['Vehicle']['id'], FLASH_TIMEOUT);
 				}	
 			}
 		}

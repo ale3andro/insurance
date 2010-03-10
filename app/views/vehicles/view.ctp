@@ -15,6 +15,7 @@
 			echo "<p>Ονοματεπώνυμο: " . $vehicle['Vehicle']['first_name'] . " " . $vehicle['Vehicle']['last_name'] . "</p>";
 			echo "<p>Όνομα Πατέρα: " . $vehicle['Vehicle']['father_name'] . "</p>";
 			echo "<p>Αριθμός Πινακίδας: " . $vehicle['Vehicle']['plate'] . "</p>";
+			echo "<p>Τηλ. Επικοινωνίας: " . $vehicle['Vehicle']['telephone'] . "</p>";
 			if ($images!=null)
 			{
 				$i=1;

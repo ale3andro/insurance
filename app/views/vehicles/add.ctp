@@ -14,6 +14,7 @@
 			echo $form->input('last_name', array('label' => 'Επώνυμο:'));
 			echo $form->input('father_name', array('label' => 'Όνομα Πατέρα:'));
 			echo $form->input('plate', array('label' => 'Αριθμός Πινακίδας:'));
+			echo $form->input('telephone', array('label' => 'Τηλ. Επικοινωνίας:'));
 			echo $form->end('Προσθήκη');
 		?>		
 	</div>
