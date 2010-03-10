@@ -187,6 +187,38 @@
 			if ($companyId!=-1)
 				$company = $this->requestAction("/insuranceCompanies/get/" . $companyId);
 			$this->set("company", $company);
-		}		
+		}	
+		
+		function renew($id, $numMonths)
+		{
+			if ( (!isset($id)) || (!isset($numMonths)) )
+				$this->cakeError('error404');
+			
+			$this->data = $this->InsuranceContract->findById($id);
+			if ($this->data['InsuranceContract']['is_paid']==0)
+				$this->flash('Δεν είναι δυνατή η ανανέωση ενός απλήρωτου συμβολαίου...', "/insuranceContracts/view/" . $id, FLASH_TIMEOUT);
+			else
+			{
+				$startDate = $this->data['InsuranceContract']['to'];
+				$d = explode('-', $this->data['InsuranceContract']['to']);
+				$endYear = $d[0];
+				$endMonth = $d[1]+$numMonths;
+				if ($endMonth>12)
+				{
+					$endYear +=floor($endMonth / 12);
+					$endMonth = ($endMonth % 12);
+				}
+				$due  = $endYear . '-' . (($endMonth<10)?('0' . $endMonth):($endMonth)) . '-' . $d[2];
+				
+				//echo $startDate . "<br />" . $due . "<br />";
+								
+				$this->data['InsuranceContract']['is_paid'] = 0;
+				$this->data['InsuranceContract']['from'] = $startDate;
+				$this->data['InsuranceContract']['to'] = $due;
+				
+				$this->InsuranceContract->save($this->data);
+				$this->flash('Το συμβόλαιο έχει ανανεωθεί...', "/insuranceContracts/view/" . $id, FLASH_TIMEOUT);
+			}
+		}	
 	}
 ?>

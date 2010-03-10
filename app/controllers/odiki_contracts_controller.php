@@ -189,5 +189,37 @@
 				$company = $this->requestAction("/odikiCompanies/get/" . $companyId);
 			$this->set("company", $company);			
 		}
+		
+		function renew($id, $numMonths)
+		{
+			if ( (!isset($id)) || (!isset($numMonths)) )
+				$this->cakeError('error404');
+			
+			$this->data = $this->OdikiContract->findById($id);
+			if ($this->data['OdikiContract']['is_paid']==0)
+				$this->flash('Δεν είναι δυνατή η ανανέωση ενός απλήρωτου συμβολαίου...', "/odikiContracts/view/" . $id, FLASH_TIMEOUT);
+			else
+			{
+				$startDate = $this->data['OdikiContract']['to'];
+				$d = explode('-', $this->data['OdikiContract']['to']);
+				$endYear = $d[0];
+				$endMonth = $d[1]+$numMonths;
+				if ($endMonth>12)
+				{
+					$endYear +=floor($endMonth / 12);
+					$endMonth = ($endMonth % 12);
+				}
+				$due  = $endYear . '-' . (($endMonth<10)?('0' . $endMonth):($endMonth)) . '-' . $d[2];
+				
+				//echo $startDate . "<br />" . $due . "<br />";
+								
+				$this->data['OdikiContract']['is_paid'] = 0;
+				$this->data['OdikiContract']['from'] = $startDate;
+				$this->data['OdikiContract']['to'] = $due;
+				
+				$this->OdikiContract->save($this->data);
+				$this->flash('Το συμβόλαιο έχει ανανεωθεί...', "/odikiContracts/view/" . $id, FLASH_TIMEOUT);
+			}
+		}
 	}
 ?>

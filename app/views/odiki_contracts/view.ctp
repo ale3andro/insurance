@@ -22,6 +22,9 @@
 			echo "<p>Ποσό ασφαλίστρων: " . $odikiContract['OdikiContract']['amount'] . " &euro;</p>";
 			echo "<p>Ασφαλιστική Εταιρία: " . $odikiCompany['OdikiCompany']['description'] . "</p>";	
 			echo "<p>" . $html->link("Διόρθωση στοιχείων", "/odikiContracts/edit/" . $vehicle['Vehicle']['odiki_contract_id']) . "</p>";
+			echo "<p>" . $html->link("Ανανέωση Συμβολαίου για 6 μήνες", "/odikiContracts/renew/" . $vehicle['Vehicle']['odiki_contract_id'] . "/6") . "</p>";
+			echo "<p>" . $html->link("Ανανέωση Συμβολαίου για 12 μήνες", "/odikiContracts/renew/" . $vehicle['Vehicle']['odiki_contract_id'] . "/12") . "</p>";
+			
 			
 			echo "<p><a href=\"" .  $html->webroot . "/odikiContracts/delete/" . $vehicle['Vehicle']['odiki_contract_id'] . "\" 
 								onclick=\"return confirm('Είστε σίγουρος ότι θέλετε να διαγράψετε αυτό το συμβόλαιο;');\">Διαγραφή Συμβολαίου</a>";

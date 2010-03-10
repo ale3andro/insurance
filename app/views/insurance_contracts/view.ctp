@@ -22,6 +22,8 @@
 			echo "<p>Ποσό ασφαλίστρων: " . $insuranceContract['InsuranceContract']['amount'] . " &euro;</p>";
 			echo "<p>Ασφαλιστική Εταιρία: " . $insuranceCompany['InsuranceCompany']['description'] . "</p>";	
 			echo "<p>" . $html->link("Διόρθωση στοιχείων", "/insuranceContracts/edit/" . $vehicle['Vehicle']['insurance_contract_id']) . "</p>";
+			echo "<p>" . $html->link("Ανανέωση Συμβολαίου για 6 μήνες", "/insuranceContracts/renew/" . $vehicle['Vehicle']['insurance_contract_id'] . "/6") . "</p>";
+			echo "<p>" . $html->link("Ανανέωση Συμβολαίου για 12 μήνες", "/insuranceContracts/renew/" . $vehicle['Vehicle']['insurance_contract_id'] . "/12") . "</p>";
 			
 			echo "<p><a href=\"" .  $html->webroot . "/insuranceContracts/delete/" . $vehicle['Vehicle']['insurance_contract_id'] . "\" 
 								onclick=\"return confirm('Είστε σίγουρος ότι θέλετε να διαγράψετε αυτό το συμβόλαιο;');\">Διαγραφή Συμβολαίου</a>";
