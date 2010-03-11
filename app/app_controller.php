@@ -26,6 +26,20 @@ class AppController extends Controller {
 		}
 	}	
 	
+	function checkDates($from, $to)
+	{
+		if ( (!checkdate($from['month'], $from['day'], $from['year']))
+					|| (!checkdate($to['month'], $to['day'], $to['year'])) )
+			return -1;
+		
+		$fromD = $from['year'] . "-" . $from['month'] . "-" . $from['day'];
+		$toD = $to['year'] . "-" . $to['month'] . "-" . $to['day'];
+										
+		if ($fromD>=$toD)
+			return -2;
+		
+	}
+	
 	function makeEnglish($string)
 	{
 		$search  = array('Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ', 'Η', 'Θ', 'Ι', 'Κ', 'Λ', 'Μ', 'Ν',

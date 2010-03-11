@@ -53,13 +53,29 @@
 		{
 			if (!isset($vehicleId))
 				$this->cakeError('error404');
+			
 			if (!empty($this->data)) 
 			{
-				if ($this->OdikiContract->save($this->data)) 
+				$dateCheck = $this->checkDates($this->data['OdikiContract']['from'], 
+								$this->data['OdikiContract']['to']);
+				
+				switch ($dateCheck)
 				{
-					$this->requestAction("/vehicles/setOdikiContractId/" . $vehicleId . "/" . $this->OdikiContract->id);					
-					$this->flash("Το συμβόλαιο έχει αποθηκευτεί...", "/vehicles/view/" . $vehicleId, FLASH_TIMEOUT);
-				}
+					case 0:
+						if ($this->OdikiContract->save($this->data)) 
+						{		
+							$this->requestAction("/vehicles/setOdikiContractId/" . $vehicleId . "/" . $this->OdikiContract->id);					
+							$this->flash('Το συμβόλαιο έχει αποθηκευτεί...', "/vehicles/view/" . $vehicleId, FLASH_TIMEOUT);
+						}
+						break;	
+					case -1: 
+						$this->flash("Παρακαλώ εισάγετε έγκυρη ημερομηνία...", "/odikiContracts/add/" . $vehicleId, FLASH_TIMEOUT);
+						break;
+					case -2:
+						$this->flash("Η ημερομηνία λήξης του συμβολαίου δεν μπορεί να είναι προγενέστερη
+									της ημερομηνίας έναρξης..", "/odikiContracts/add/" . $vehicleId, FLASH_TIMEOUT);
+						break;	
+				}	
 			}
 			else
 			{
@@ -94,8 +110,28 @@
 			}
 			else
 			{
-				$this->OdikiContract->save($this->data);
-				$this->flash('Το συμβόλαιο έχει ενημερωθεί...', "/odikiContracts/view/" . $id, FLASH_TIMEOUT);
+				//$this->OdikiContract->save($this->data);
+				//$this->flash('Το συμβόλαιο έχει ενημερωθεί...', "/odikiContracts/view/" . $id, FLASH_TIMEOUT);
+				$dateCheck = $this->checkDates($this->data['OdikiContract']['from'], 
+								$this->data['OdikiContract']['to']);
+				
+				switch ($dateCheck)
+				{
+					case 0:
+						if ($this->OdikiContract->save($this->data)) 
+						{		
+							$this->requestAction("/vehicles/setOdikiContractId/" . $id . "/" . $this->OdikiContract->id);					
+							$this->flash('Το συμβόλαιο έχει ενημερωθεί...', "/vehicles/view/" . $id, FLASH_TIMEOUT);
+						}
+						break;	
+					case -1: 
+						$this->flash("Παρακαλώ εισάγετε έγκυρη ημερομηνία...", "/odikiContracts/edit/" . $id, FLASH_TIMEOUT);
+						break;
+					case -2:
+						$this->flash("Η ημερομηνία λήξης του συμβολαίου δεν μπορεί να είναι προγενέστερη
+									της ημερομηνίας έναρξης..", "/odikiContracts/edit/" . $id, FLASH_TIMEOUT);
+						break;	
+				}	
 			}
 		}
 		/* fixed */

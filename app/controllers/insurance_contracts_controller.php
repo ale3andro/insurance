@@ -54,11 +54,26 @@
 				$this->cakeError('error404');
 			if (!empty($this->data)) 
 			{
-				if ($this->InsuranceContract->save($this->data)) 
+				$dateCheck = $this->checkDates($this->data['InsuranceContract']['from'], 
+								$this->data['InsuranceContract']['to']);
+				
+				switch ($dateCheck)
 				{
-					$this->requestAction("/vehicles/setInsuranceContractId/" . $vehicleId . "/" . $this->InsuranceContract->id);					
-					$this->flash('Το συμβόλαιο έχει αποθηκευτεί...', "/vehicles/view/" . $vehicleId, FLASH_TIMEOUT);
-				}
+					case 0:
+						if ($this->InsuranceContract->save($this->data)) 
+						{		
+							$this->requestAction("/vehicles/setInsuranceContractId/" . $vehicleId . "/" . $this->InsuranceContract->id);					
+							$this->flash('Το συμβόλαιο έχει αποθηκευτεί...', "/vehicles/view/" . $vehicleId, FLASH_TIMEOUT);
+						}
+						break;	
+					case -1: 
+						$this->flash("Παρακαλώ εισάγετε έγκυρη ημερομηνία...", "/insuranceContracts/add/" . $vehicleId, FLASH_TIMEOUT);
+						break;
+					case -2:
+						$this->flash("Η ημερομηνία λήξης του συμβολαίου δεν μπορεί να είναι προγενέστερη
+									της ημερομηνίας έναρξης..", "/insuranceContracts/add/" . $vehicleId, FLASH_TIMEOUT);
+						break;	
+				}	
 			}
 			else
 			{
@@ -92,9 +107,29 @@
 			}
 			else
 			{
-				$this->InsuranceContract->save($this->data);
-				$this->flash('Το συμβόλαιο έχει ενημερωθεί...', "/insuranceContracts/view/" . $id, FLASH_TIMEOUT);
+				$dateCheck = $this->checkDates($this->data['InsuranceContract']['from'], 
+								$this->data['InsuranceContract']['to']);
+				
+				switch ($dateCheck)
+				{
+					case 0:
+						if ($this->InsuranceContract->save($this->data)) 
+						{		
+							$this->requestAction("/vehicles/setInsuranceContractId/" . $id . "/" . $this->InsuranceContract->id);					
+							$this->flash('Το συμβόλαιο έχει ενημερωθεί...', "/vehicles/view/" . $id, FLASH_TIMEOUT);
+						}
+						break;	
+					case -1: 
+						$this->flash("Παρακαλώ εισάγετε έγκυρη ημερομηνία...", "/insuranceContracts/edit/" . $id, FLASH_TIMEOUT);
+						break;
+					case -2:
+						$this->flash("Η ημερομηνία λήξης του συμβολαίου δεν μπορεί να είναι προγενέστερη
+									της ημερομηνίας έναρξης..", "/insuranceContracts/edit/" . $id, FLASH_TIMEOUT);
+						break;	
+				}	
 			}
+			
+			
 		}
 		/* fixed */
 		function pay($id) /* ok */

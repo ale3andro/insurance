@@ -4,7 +4,7 @@
 		echo $this->element("header", array( "activeTab" => -1, "username" => $session->read('user')) ); 
 	else
 		echo $this->element("header", array( "activeTab" => -1) ); 
-	$title = "Δροσθήκη Συμβολαίου Ασφάλειας (" . $vehicle['Vehicle']['plate'] . ")";
+	$title = "Προσθήκη Συμβολαίου Ασφάλειας (" . $vehicle['Vehicle']['plate'] . ")";
 	$this->set("title", $title);
 ?>
 <div class="post">
