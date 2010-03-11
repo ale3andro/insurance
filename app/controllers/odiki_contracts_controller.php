@@ -245,9 +245,14 @@
 					$endYear +=floor($endMonth / 12);
 					$endMonth = ($endMonth % 12);
 				}
-				$due  = $endYear . '-' . (($endMonth<10)?('0' . $endMonth):($endMonth)) . '-' . $d[2];
+				$checkDue['year'] = (int)$endYear;
+				$checkDue['month'] = (int)(($endMonth<10)?('0' . $endMonth):($endMonth));
+				$checkDue['day'] = (int)$d[2];
 				
-				//echo $startDate . "<br />" . $due . "<br />";
+				if (!checkdate($checkDue))
+					$checkDue = $this->fixDate($checkDue);
+				
+				$due  = $checkDue['year'] . '-' . $checkDue['month'] . '-' . $checkDue['day'];
 								
 				$this->data['OdikiContract']['is_paid'] = 0;
 				$this->data['OdikiContract']['from'] = $startDate;

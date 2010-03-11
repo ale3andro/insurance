@@ -26,18 +26,36 @@ class AppController extends Controller {
 		}
 	}	
 	
-	function checkDates($from, $to)
+	function checkDates($from, $to=null)
 	{
-		if ( (!checkdate($from['month'], $from['day'], $from['year']))
+		if ($to!=null)
+		{
+			if ( (!checkdate($from['month'], $from['day'], $from['year']))
 					|| (!checkdate($to['month'], $to['day'], $to['year'])) )
-			return -1;
+				return -1; // valid dates check
 		
-		$fromD = $from['year'] . "-" . $from['month'] . "-" . $from['day'];
-		$toD = $to['year'] . "-" . $to['month'] . "-" . $to['day'];
+			$fromD = $from['year'] . "-" . $from['month'] . "-" . $from['day'];
+			$toD = $to['year'] . "-" . $to['month'] . "-" . $to['day'];
 										
-		if ($fromD>=$toD)
-			return -2;
-		
+			if ($fromD>=$toD)
+				return -2; // to after from check
+		}
+		else
+		{
+			if (!checkdate($from))
+				return -1;
+		}
+	}
+	
+	/*
+	 * 	Αν η ημορομηνία δεν είναι έγκυρη επιστρέφει την προηγούμενη έγκυρη ημερομηνία
+	 */
+	function fixDate($date) 
+	{
+		while (!checkdate($date["month"], $date["day"], $date["year"]))
+			$date['day']--;
+			
+		return $date;			
 	}
 	
 	function makeEnglish($string)
