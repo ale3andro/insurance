@@ -60,6 +60,8 @@
 				switch ($dateCheck)
 				{
 					case 0:
+						$this->data['InsuranceContract']['amount'] = str_replace(',','.', 
+									$this->data['InsuranceContract']['amount']);
 						if ($this->InsuranceContract->save($this->data)) 
 						{		
 							$this->requestAction("/vehicles/setInsuranceContractId/" . $vehicleId . "/" . $this->InsuranceContract->id);					
@@ -113,6 +115,8 @@
 				switch ($dateCheck)
 				{
 					case 0:
+						$this->data['InsuranceContract']['amount'] = str_replace(',','.', 
+									$this->data['InsuranceContract']['amount']);
 						if ($this->InsuranceContract->save($this->data)) 
 						{		
 							$this->requestAction("/vehicles/setInsuranceContractId/" . $id . "/" . $this->InsuranceContract->id);					

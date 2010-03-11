@@ -62,6 +62,8 @@
 				switch ($dateCheck)
 				{
 					case 0:
+						$this->data['OdikiContract']['amount'] = str_replace(',','.', 
+									$this->data['OdikiContract']['amount']);
 						if ($this->OdikiContract->save($this->data)) 
 						{		
 							$this->requestAction("/vehicles/setOdikiContractId/" . $vehicleId . "/" . $this->OdikiContract->id);					
@@ -118,6 +120,8 @@
 				switch ($dateCheck)
 				{
 					case 0:
+						$this->data['OdikiContract']['amount'] = str_replace(',','.', 
+									$this->data['OdikiContract']['amount']);
 						if ($this->OdikiContract->save($this->data)) 
 						{		
 							$this->requestAction("/vehicles/setOdikiContractId/" . $id . "/" . $this->OdikiContract->id);					

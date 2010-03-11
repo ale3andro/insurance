@@ -57,7 +57,7 @@ class AppController extends Controller {
 			
 		return $date;			
 	}
-	
+
 	function makeEnglish($string)
 	{
 		$search  = array('Α', 'Β', 'Γ', 'Δ', 'Ε', 'Ζ', 'Η', 'Θ', 'Ι', 'Κ', 'Λ', 'Μ', 'Ν',
