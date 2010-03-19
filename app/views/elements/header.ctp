@@ -30,10 +30,13 @@
 			<li <?php echo ($activeTab==5?"class=\"current_page_item\"":""); ?>><?php echo $html->link("Αναζήτηση", "/vehicles/search"); ?></li>
 			<li <?php echo ($activeTab==6?"class=\"current_page_item\"":""); ?>>
 				<?php 
-					if (!isset($username))
-						echo $html->link("Είσοδος", "/users/login"); 
-					else
-						echo $html->link("Έξοδος", "/users/logout"); 
+					if (ENABLE_USERS==1)
+					{
+						if (!isset($username))
+							echo $html->link("Είσοδος", "/users/login"); 
+						else
+							echo $html->link("Έξοδος", "/users/logout");
+					}
 				?>
 			</li>
 		</ul>

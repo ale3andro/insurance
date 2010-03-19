@@ -229,4 +229,5 @@
 	
 	define('FLASH_TIMEOUT', 1);
 	define('SAVE_DIRECTORY', 'pics/');
+	define('ENABLE_USERS', 0); // set to 1 to enable users or 0 to disable users (free access to everyone)
 ?>

@@ -6,23 +6,30 @@ class AppController extends Controller {
 	
 	function beforeFilter() 
 	{ 
-		Security::setHash('md5');
-		// Authenticate
-		
-		$this->Auth->deny();
-		$this->Auth->allow('display'); // Allow static pages to be rendered for not authenticated users
-		
-		$this->Auth->loginAction = array('controller' => 'users', 'action' => 'login');
-		$this->Auth->loginRedirect = array('controller' => 'vehicles', 'action' => 'index');
-		$this->Auth->logoutRedirect = array('controller' => 'pages', 'action' => 'home');
-		
-		$this->Auth->authError = 'Παρακαλώ δώστε τα στοιχεία σας ...';
-		$this->Auth->loginError = 'Λάθος συνδυσμός ονόματος χρήστη / κωδικού πρόσβασης.';
-		
-		if ($this->Auth->user())
+		if (ENABLE_USERS==1)
 		{
+			Security::setHash('md5');
+			// Authenticate
+		
+			$this->Auth->deny();
+			$this->Auth->allow('display'); // Allow static pages to be rendered for not authenticated users
+		
+			$this->Auth->loginAction = array('controller' => 'users', 'action' => 'login');
+			$this->Auth->loginRedirect = array('controller' => 'vehicles', 'action' => 'index');
+			$this->Auth->logoutRedirect = array('controller' => 'pages', 'action' => 'home');
+			
+			$this->Auth->authError = 'Παρακαλώ δώστε τα στοιχεία σας ...';
+			$this->Auth->loginError = 'Λάθος συνδυσμός ονόματος χρήστη / κωδικού πρόσβασης.';
+		
+			if ($this->Auth->user())
+			{	
 				$this->set("username", $this->Auth->user('username'));
 				$this->Session->write('user', $this->Auth->user('username'));
+			}
+		}
+		else
+		{
+			$this->Auth->allow();
 		}
 	}	
 	

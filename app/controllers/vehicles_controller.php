@@ -7,8 +7,8 @@
 		
 		function beforeFilter()
 		{
-			//$this->Auth->deny();
-			$this->Auth->allow('index', 'search');
+			if (ENABLE_USERS==0)
+				$this->Auth->allow();
 		}
 		
 		/* fixed */
