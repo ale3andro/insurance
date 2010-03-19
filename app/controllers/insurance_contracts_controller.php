@@ -264,6 +264,15 @@
 				$this->InsuranceContract->save($this->data);
 				$this->flash('Το συμβόλαιο έχει ανανεωθεί...', "/insuranceContracts/view/" . $id, FLASH_TIMEOUT);
 			}
-		}	
+		}
+		
+		function getAll()
+		{
+			$contracts = $this->InsuranceContract->find('all');
+			foreach ($contracts as $contract)
+				$theContracts[] = $contract;
+				
+			return $theContracts;			
+		}
 	}
 ?>

@@ -402,8 +402,55 @@
 					$numOdiki++;
 			}
 			
-			$this->set('insuranceContractsFromDB', $this->requestAction("/insuranceContracts/statistics"));
-			$this->set('odikiContractsFromDB', $this->requestAction("/odikiContracts/statistics"));
+			$insuranceContractsFromDB = $this->requestAction("/insuranceContracts/statistics");
+			$odikiContractsFromDB = $this->requestAction("/odikiContracts/statistics");
+			
+			
+			if ($insuranceContractsFromDB != $numInsured)
+			{
+				$insContracts = $this->requestAction("/insuranceContracts/getAll");
+				$i=0;
+				foreach ($insContracts as $insContract)
+					$insContractsIds[$i++] = $insContract['InsuranceContract']['id'];
+				
+				$insVehicles = $this->Vehicle->find("all", array('conditions' => array('insurance_contract_id <>' => 0)));
+				$i=0;
+				foreach ($insVehicles as $insVehicle)
+					$insContractsIdsFromVehicles[$i++] = $insVehicle['Vehicle']['insurance_contract_id'];
+				
+				if ($insuranceContractsFromDB > $numInsured)
+				{
+					foreach (
+				}
+				else
+				{
+					// InsuranceContractIds στον πίνακα vehicles που είναι έγκυρα 
+					$uniqueInsuranceContractIdsInVehiclesTable[] = null;
+					// InsuranceContractIds στον πίνακα vehicles που είναι διπλότυπα (δηλαδή 2 οχήματα αντιστοιχούν στο ίδιο συμβόλαιο)
+					$duplicateInsuranceContractIdsInVehiclesTable[] = null;
+					// InsuranceContractIds στον πίνακα vehicles που δεν έχουν αντίστοιχες εγγραφές στον πίνακα insurance_contracts
+					$voidInsuranceContractIdsInVehiclesTable[] = null; 
+					$i=0; $j=0; $k=0;
+					foreach ($insVehicles as $insVehicle)
+					{
+						if (!in_array($insVehicle['Vehicle']['insurance_contract_id'], $uniqueInsuranceContractIdsInVehiclesTable))
+							$uniqueInsuranceContractIdsInVehiclesTable[$i++] = $insVehicle['Vehicle']['insurance_contract_id'];
+						else
+							$duplicateInsuranceContractIdsInVehiclesTable[$j++] = $insVehicle['Vehicle']['insurance_contract_id'];
+		
+						if (!in_array($insVehicle['Vehicle']['insurance_contract_id'], $insContractsIds))
+							$voidInsuranceContractIdsInVehiclesTable[$k++] = $insVehicle['Vehicle']['insurance_contract_id'];
+					}
+				}
+				die('ok');
+			}
+			
+			if ($odikiContractsFromDB != $numOdiki)
+			{
+				
+			}
+			$this->set('insuranceContractsFromDB', $insuranceContractsFromDB);
+			$this->set('odikiContractsFromDB', $odikiContractsFromDB);
 			$this->set('num', $num);
 			$this->set('numInsured', $numInsured);
 			$this->set('numOdiki', $numOdiki);
