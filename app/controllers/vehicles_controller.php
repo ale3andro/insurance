@@ -387,6 +387,76 @@
 			}
 			$this->set("filename", backup_tables('localhost','root','root','insurance'));
 		}
+		
+		/*
+		 * 	Ελέγχει τον πίνακα vehicles της βάσης για συμβόλαιο ασφάλειας και οδικής που δεν έχουν
+		 * 	αντίκρυσμα στους αντίστοιχους πίνακες συμβολαίων και για διπλότυπα.
+		 */
+		function checkTable()
+		{
+			$vehicles = $this->Vehicle->find("all");
+			
+			$insContrIds = null; 
+				$uniqueInsContrIds = null; // Μοναδικό και έγκυρα 
+				$duplicInsContrIds = null; // Διπλά ids μέσα στον πίνακα των οχημάτων
+				$voidInsContrIds = null;	// Μοναδικά αλλά χωρίς αντίκρυσμα στον πίνακα συμβολαίων
+			
+			$odiContrIds = null; 
+				$uniqueOdiContrIds = null; 
+				$duplicOdiContrIds = null;
+				$voidOdiContrIds = null;
+				
+			foreach ($vehicles as $vehicle)
+			{
+				if ($vehicle['Vehicle']['insurance_contract_id'] != 0)
+				{
+					$insContrIds[] = $vehicle['Vehicle']['insurance_contract_id'];
+								
+					if (!in_array($vehicle['Vehicle']['insurance_contract_id'], $uniqueInsContrIds))
+					{
+						// Είναι μοναδικό το id αλλά υπάρχει στον αντίστοιχο πίνακα;
+						$insContract = $this->requestAction("/insuranceContracts/get/" . 
+													$vehicle['Vehicle']['insurance_contract_id']);
+						if ($insContract==null)
+							$voidInsContrIds[] = $vehicle['Vehicle']['insurance_contract_id'];
+						else
+							$uniqueInsContrIds[] = $vehicle['Vehicle']['insurance_contract_id'];
+					}
+					else
+						$duplicInsContrIds[] = $vehicle['Vehicle']['insurance_contract_id'];
+				}
+				
+				if ($vehicle['Vehicle']['odiki_contract_id'] !=0 )
+				{
+					$odiContrIds[] = $vehicle['Vehicle']['odiki_contract_id'];
+				
+					if (!in_array($vehicle['Vehicle']['odiki_contract_id'], $uniqueOdiContrIds))
+					{
+						$odiContract = $this->requestAction("/odikiContracts/get/" . 
+													$vehicle['Vehicle']['odiki_contract_id']);
+						if ($odiContract==null)
+							$voidOdiContrIds[] = $vehicle['Vehicle']['odiki_contract_id'];
+						else
+							$uniqueOdiContrIds[] = $vehicle['Vehicle']['odiki_contract_id'];
+					}
+					else
+						$duplicOdiContrIds[] = $vehicle['Vehicle']['odiki_contract_id'];				
+				}
+				
+			}
+			$this->set('vehicles', $vehicles);
+			
+			$this->set('insContrIds', $insContrIds);
+			$this->set('uniqueInsContrIds',	$uniqueInsContrIds);
+			$this->set('duplicInsContrIds', $duplicInsContrIds);
+			$this->set('voidInsContrIds', $voidInsContrIds);
+			
+			$this->set('odiContrIds', $odiContrIds);
+			$this->set('uniqueOdiContrIds',	$uniqueOdiContrIds);
+			$this->set('duplicOdiContrIds', $duplicOdiContrIds);
+			$this->set('voidOdiContrIds', $voidOdiContrIds);
+		}
+		
 		function statistics() /* ok */
 		{
 			$vehicles = $this->Vehicle->find("all");
@@ -405,50 +475,6 @@
 			$insuranceContractsFromDB = $this->requestAction("/insuranceContracts/statistics");
 			$odikiContractsFromDB = $this->requestAction("/odikiContracts/statistics");
 			
-			
-			if ($insuranceContractsFromDB != $numInsured)
-			{
-				$insContracts = $this->requestAction("/insuranceContracts/getAll");
-				$i=0;
-				foreach ($insContracts as $insContract)
-					$insContractsIds[$i++] = $insContract['InsuranceContract']['id'];
-				
-				$insVehicles = $this->Vehicle->find("all", array('conditions' => array('insurance_contract_id <>' => 0)));
-				$i=0;
-				foreach ($insVehicles as $insVehicle)
-					$insContractsIdsFromVehicles[$i++] = $insVehicle['Vehicle']['insurance_contract_id'];
-				
-				if ($insuranceContractsFromDB > $numInsured)
-				{
-					foreach (
-				}
-				else
-				{
-					// InsuranceContractIds στον πίνακα vehicles που είναι έγκυρα 
-					$uniqueInsuranceContractIdsInVehiclesTable[] = null;
-					// InsuranceContractIds στον πίνακα vehicles που είναι διπλότυπα (δηλαδή 2 οχήματα αντιστοιχούν στο ίδιο συμβόλαιο)
-					$duplicateInsuranceContractIdsInVehiclesTable[] = null;
-					// InsuranceContractIds στον πίνακα vehicles που δεν έχουν αντίστοιχες εγγραφές στον πίνακα insurance_contracts
-					$voidInsuranceContractIdsInVehiclesTable[] = null; 
-					$i=0; $j=0; $k=0;
-					foreach ($insVehicles as $insVehicle)
-					{
-						if (!in_array($insVehicle['Vehicle']['insurance_contract_id'], $uniqueInsuranceContractIdsInVehiclesTable))
-							$uniqueInsuranceContractIdsInVehiclesTable[$i++] = $insVehicle['Vehicle']['insurance_contract_id'];
-						else
-							$duplicateInsuranceContractIdsInVehiclesTable[$j++] = $insVehicle['Vehicle']['insurance_contract_id'];
-		
-						if (!in_array($insVehicle['Vehicle']['insurance_contract_id'], $insContractsIds))
-							$voidInsuranceContractIdsInVehiclesTable[$k++] = $insVehicle['Vehicle']['insurance_contract_id'];
-					}
-				}
-				die('ok');
-			}
-			
-			if ($odikiContractsFromDB != $numOdiki)
-			{
-				
-			}
 			$this->set('insuranceContractsFromDB', $insuranceContractsFromDB);
 			$this->set('odikiContractsFromDB', $odikiContractsFromDB);
 			$this->set('num', $num);
