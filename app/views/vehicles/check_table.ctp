@@ -60,17 +60,12 @@
 			}
 			else
 				echo "Δεν υπάρχουν ids συμβολαίων χωρίς αντίκρυσμα";
-			/*
-			$this->set('insContrIds', $insContrIds);
-			$this->set('uniqueInsContrIds',	$uniqueInsContrIds);
-			$this->set('duplicInsContrIds', $duplicInsContrIds);
-			$this->set('voidInsContrIds', $voidInsContrIds);
 			
-			$this->set('odiContrIds', $odiContrIds);
-			$this->set('uniqueOdiContrIds',	$uniqueOdiContrIds);
-			$this->set('duplicOdiContrIds', $duplicOdiContrIds);
-			$this->set('voidOdiContrIds', $voidOdiContrIds);
-			*/
+			echo "<br /><br />";
+			
+			echo $html->link("Έλεγχος πίνακα ασφαλιστικών συμβολαίων", "/insuranceContracts/checkTable");
+			echo "<br />";
+			echo $html->link("Έλεγχος πίνακα συμβολαίων οδικής βοήθειας", "/odikiContracts/checkTable");
 		?>		
 	</div>
 </div>

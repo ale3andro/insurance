@@ -34,8 +34,12 @@
 							<br />Αριθμός Ασφαλισμένων Οχημάτων από Πίνακα Οχημάτων: $numInsured
 							<br />Αριθμός Συμβολαίων Οδικής στον Πίνακα Συμβολαίων Οδικής: $odikiContractsFromDB
 							<br />Αριθμός Ασφαλισμένων με Οδική Οχημάτων από Πίνακα Οχημάτων: $numOdiki
-						</p>";
-				echo "<br />" .$html->link("Έλεγχος Πινάκων", "/vehicles/checkTable");
+							<br /><br /><br />" . 
+							$html->link("Έλεγχος Πίνακα Οχημάτων", "/vehicles/checkTable") . "<br />" . 
+							$html->link("Έλεγχος Πίνακα Συμβ. Ασφάλειας", "/insuranceContracts/checkTable") . "<br />" . 
+							$html->link("Έλεγχος Πίνακα Συμβ. Οδικής", "/odikiContracts/checkTable") . 
+						"</p>";
+				
 			}
 		?>		
 	</div>

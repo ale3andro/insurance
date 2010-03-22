@@ -60,6 +60,7 @@
 						<li><?php echo $html->link("Οχήματα χωρίς Ασφάλεια", "/vehicles/withoutInsurance"); ?></li>
 						<li><?php echo $html->link("Οχήματα χωρίς Οδική Βοήθεια", "/vehicles/withoutOdiki"); ?></li>
 						<li><?php echo $html->link("Συνολικά Στατιστικά", "/vehicles/statistics"); ?></li>
+						<li><?php echo $html->link("Έλεγχος Πίνακα Οχημάτων", "/vehicles/checkTable"); ?></li>
 					</ul>
 
 				</div>
@@ -77,6 +78,7 @@
 						<li><?php echo $html->link("Λήγουν τον επόμενο μήνα", "/vehicles/getInsuranceContractsDue/30"); ?></li>
 						<li><?php echo $html->link("Ανά Εταιρία", "/insuranceCompanies"); ?></li>
 						<li><?php echo $html->link("Συνολικά Στατιστικά", "/insuranceContracts/statistics"); ?></li>
+						<li><?php echo $html->link("Έλεγχος Πίνακα Συμβ. Ασφάλειας", "/insuranceContracts/checkTable"); ?></li>
 					</ul>
 
 				</div>
@@ -94,6 +96,7 @@
 						<li><?php echo $html->link("Λήγουν τον επόμενο μήνα", "/vehicles/getOdikiContractsDue/30"); ?></li>
 						<li><?php echo $html->link("Ανά Εταιρία", "/odikiCompanies"); ?></li>
 						<li><?php echo $html->link("Συνολικά Στατιστικά", "/odikiContracts/statistics"); ?></li>
+						<li><?php echo $html->link("Έλεγχος Πίνακα Συμβ. Οδικής", "/odikiContracts/checkTable"); ?></li>
 					</ul>
 
 				</div>

@@ -266,5 +266,20 @@
 				$this->flash('Το συμβόλαιο έχει ανανεωθεί...', "/odikiContracts/view/" . $id, FLASH_TIMEOUT);
 			}
 		}
+		
+		function checkTable()
+		{
+			$contracts = $this->OdikiContract->find('all');
+			$voidContracts = null;
+			foreach ($contracts as $contract)
+			{
+				$vehicle = $this->requestAction("/vehicles/getFromInsuranceId/" 
+							. $contract['OdikiContract']['id']);
+				if ($vehicle==null)
+					$voidContracts[] = $contract['OdikiContract']['id'];
+			}
+			$this->set("contracts", $contracts);
+			$this->set("voidContracts", $voidContracts);			
+		}
 	}
 ?>

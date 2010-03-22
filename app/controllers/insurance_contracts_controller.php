@@ -274,5 +274,20 @@
 				
 			return $theContracts;			
 		}
+		
+		function checkTable()
+		{
+			$contracts = $this->InsuranceContract->find('all');
+			$voidContracts = null;
+			foreach ($contracts as $contract)
+			{
+				$vehicle = $this->requestAction("/vehicles/getFromInsuranceId/" 
+							. $contract['InsuranceContract']['id']);
+				if ($vehicle==null)
+					$voidContracts[] = $contract['InsuranceContract']['id'];
+			}
+			$this->set("contracts", $contracts);
+			$this->set("voidContracts", $voidContracts);			
+		}
 	}
 ?>
