@@ -19,6 +19,9 @@
 				foreach ($voidContracts as $contract)
 					echo "<li>Το συμβόλαιο ασφάλειας με id: " . $contract . 
 									" είναι χωρίς αντίκρυσμα στον πίνακα των οχημάτων</li>";
+				
+				foreach ($voidContracts as $contract)
+					echo $contract . ", ";
 			}
 			else
 				echo "Δεν βρέθηκαν συμβόλαια ασφάλειας χωρίς αντίκρυσμα στον πίνακα οχημάτων";

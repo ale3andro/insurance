@@ -56,27 +56,32 @@
 			
 			if (!empty($this->data)) 
 			{
-				$dateCheck = $this->checkDates($this->data['OdikiContract']['from'], 
-								$this->data['OdikiContract']['to']);
-				
-				switch ($dateCheck)
+				if (empty($this->data['OdikiContract']['amount']))
+					$this->flash("Παρακαλώ εισάγετε το ποσό του συμβολαίου...", "/odikiContracts/add/" . $vehicleId, FLASH_TIMEOUT);
+				else
 				{
-					case 0:
-						$this->data['OdikiContract']['amount'] = str_replace(',','.', 
-									$this->data['OdikiContract']['amount']);
-						if ($this->OdikiContract->save($this->data)) 
-						{		
-							$this->requestAction("/vehicles/setOdikiContractId/" . $vehicleId . "/" . $this->OdikiContract->id);					
-							$this->flash('Το συμβόλαιο έχει αποθηκευτεί...', "/vehicles/view/" . $vehicleId, FLASH_TIMEOUT);
-						}
-						break;	
-					case -1: 
-						$this->flash("Παρακαλώ εισάγετε έγκυρη ημερομηνία...", "/odikiContracts/add/" . $vehicleId, FLASH_TIMEOUT);
-						break;
-					case -2:
-						$this->flash("Η ημερομηνία λήξης του συμβολαίου δεν μπορεί να είναι προγενέστερη
-									της ημερομηνίας έναρξης..", "/odikiContracts/add/" . $vehicleId, FLASH_TIMEOUT);
-						break;	
+					$dateCheck = $this->checkDates($this->data['OdikiContract']['from'], 
+									$this->data['OdikiContract']['to']);
+				
+					switch ($dateCheck)
+					{
+						case 0:
+							$this->data['OdikiContract']['amount'] = str_replace(',','.', 
+										$this->data['OdikiContract']['amount']);
+							if ($this->OdikiContract->save($this->data)) 
+							{		
+								$this->requestAction("/vehicles/setOdikiContractId/" . $vehicleId . "/" . $this->OdikiContract->id);					
+								$this->flash('Το συμβόλαιο έχει αποθηκευτεί...', "/vehicles/view/" . $vehicleId, FLASH_TIMEOUT);
+							}
+							break;	
+						case -1: 
+							$this->flash("Παρακαλώ εισάγετε έγκυρη ημερομηνία...", "/odikiContracts/add/" . $vehicleId, FLASH_TIMEOUT);
+							break;
+						case -2:
+							$this->flash("Η ημερομηνία λήξης του συμβολαίου δεν μπορεί να είναι προγενέστερη
+										της ημερομηνίας έναρξης..", "/odikiContracts/add/" . $vehicleId, FLASH_TIMEOUT);
+							break;	
+					}
 				}	
 			}
 			else
@@ -122,7 +127,7 @@
 									$this->data['OdikiContract']['amount']);
 						if ($this->OdikiContract->save($this->data)) 
 						{		
-							$this->requestAction("/vehicles/setOdikiContractId/" . $id . "/" . $this->OdikiContract->id);					
+							//$this->requestAction("/vehicles/setOdikiContractId/" . $id . "/" . $this->OdikiContract->id);					
 							$this->flash('Το συμβόλαιο έχει ενημερωθεί...', "/vehicles/view/" . $vehicle['Vehicle']['id'], FLASH_TIMEOUT);
 						}
 						break;	
@@ -271,7 +276,7 @@
 			$voidContracts = null;
 			foreach ($contracts as $contract)
 			{
-				$vehicle = $this->requestAction("/vehicles/getFromInsuranceId/" 
+				$vehicle = $this->requestAction("/vehicles/getFromOdikiId/" 
 							. $contract['OdikiContract']['id']);
 				if ($vehicle==null)
 					$voidContracts[] = $contract['OdikiContract']['id'];

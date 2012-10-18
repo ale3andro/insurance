@@ -21,6 +21,9 @@
 				foreach ($duplicInsContrIds as $duplicate)
 					echo "<li>Το ασφαλιστικό συμβόλαιο με id: " . $duplicate . " είναι διπλότυπο</li>";
 				echo "</ul>";
+				
+				foreach ($duplicInsContrIds as $duplicate)
+					echo $duplicate . ", ";
 			}
 			else
 				echo "Δεν υπάρχει διπλότυπα συμβόλαια";
@@ -31,7 +34,10 @@
 				echo "Συμβόλαια χωρίς αντίκρυσμα:<br /><ul>";
 				foreach ($voidInsContrIds as $void)
 					echo "<li>Το ασφαλιστικό συμβόλαιο με id: " . $void . " είναι χωρίς αντίκρυσμα</li>";
-				echo "</ul>";			
+				echo "</ul>";	
+				
+				foreach ($voidInsContrIds as $void)
+					echo $void . ", ";
 			}
 			else
 				echo "Δεν υπάρχουν ids συμβολαίων χωρίς αντίκρυσμα";
@@ -46,9 +52,12 @@
 				foreach ($duplicOdiContrIds as $duplicate)
 					echo "<li>Το συμβόλαιο οδικής με id: " . $duplicate . " είναι διπλότυπο</li>";
 				echo "</ul>";
+				
+				foreach ($duplicOdiContrIds as $duplicate)
+					echo $duplicate . ", ";
 			}
 			else
-				echo "Δεν υπάρχει διπλότυπα συμβόλαια";
+				echo "Δεν υπάρχουν διπλότυπα συμβόλαια";
 				
 			echo "<br />";
 			if (count($voidOdiContrIds)!=0)
@@ -57,6 +66,9 @@
 				foreach ($voidOdiContrIds as $void)
 					echo "<li>Το συμβόλαιο οδικής με id: " . $void . " είναι χωρίς αντίκρυσμα</li>";
 				echo "</ul>";			
+				
+				foreach ($voidOdiContrIds as $void)
+					echo $void . ", ";
 			}
 			else
 				echo "Δεν υπάρχουν ids συμβολαίων χωρίς αντίκρυσμα";
