@@ -20,7 +20,8 @@
 			echo "<p>Διάρκεια Ασφάλισης: από " . $insuranceContract['InsuranceContract']['from'] . " έως " . 
 							$insuranceContract['InsuranceContract']['to'] . "</p>";
 			echo "<p>Ποσό ασφαλίστρων: " . $insuranceContract['InsuranceContract']['amount'] . " &euro;</p>";
-			echo "<p>Ασφαλιστική Εταιρία: " . $insuranceCompany['InsuranceCompany']['description'] . "</p>";	
+			echo "<p>Ασφαλιστική Εταιρία: " . $insuranceCompany['InsuranceCompany']['description'] . "</p>";
+			echo "<p>Αριθμός Συμβολαίου: " . $insuranceContract['InsuranceContract']['contract_number'] . "</p>";	
 			echo "<p>" . $html->link("Διόρθωση στοιχείων", "/insuranceContracts/edit/" . $vehicle['Vehicle']['insurance_contract_id']) . "</p>";
 			echo "<p>" . $html->link("Ανανέωση Συμβολαίου για 6 μήνες", "/insuranceContracts/renew/" . $vehicle['Vehicle']['insurance_contract_id'] . "/6") . "</p>";
 			echo "<p>" . $html->link("Ανανέωση Συμβολαίου για 12 μήνες", "/insuranceContracts/renew/" . $vehicle['Vehicle']['insurance_contract_id'] . "/12") . "</p>";

@@ -45,7 +45,8 @@
 				echo "<p>Διάρκεια Ασφάλισης: από " . $insuranceContract['InsuranceContract']['from'] . " έως " . 
 							$insuranceContract['InsuranceContract']['to'] . "</p>";
 				echo "<p>Ποσό ασφαλίστρων: " . $insuranceContract['InsuranceContract']['amount'] . " &euro;</p>";
-				echo "<p>Ασφαλιστική Εταιρία: " . $insuranceCompany['InsuranceCompany']['description'] . "</p>";	
+				echo "<p>Ασφαλιστική Εταιρία: " . $insuranceCompany['InsuranceCompany']['description'] . "</p>";
+				echo "<p>Αριθμός Συμβολαίου: " . $insuranceContract['InsuranceContract']['contract_number'] . "</p>";
 				
 				echo "<p>" . $html->link("Διόρθωση στοιχείων", "/insuranceContracts/edit/" . $vehicle['Vehicle']['insurance_contract_id']) . "</p>";
 				echo "<p>" . $html->link("Ανανέωση Συμβολαίου για 6 μήνες", "/insuranceContracts/renew/" . $vehicle['Vehicle']['insurance_contract_id'] . "/6") . "</p>";
@@ -72,7 +73,8 @@
 				echo "<p>Διάρκεια Ασφάλισης: από " . $odikiContract['OdikiContract']['from'] . " έως " . 
 							$odikiContract['OdikiContract']['to'] . "</p>";
 				echo "<p>Ποσό ασφαλίστρων: " . $odikiContract['OdikiContract']['amount'] . " &euro;</p>";
-				echo "<p>Ασφαλιστική Εταιρία: " . $odikiCompany['OdikiCompany']['description'] . "</p>";	
+				echo "<p>Ασφαλιστική Εταιρία: " . $odikiCompany['OdikiCompany']['description'] . "</p>";
+				echo "<p>Αριθμός Συμβολαίου: " . $odikiContract['OdikiContract']['contract_number'] . "</p>";
 				echo "<p>" . $html->link("Διόρθωση στοιχείων", "/odikiContracts/edit/" . $vehicle['Vehicle']['odiki_contract_id']) . "</p>";
 				echo "<p>" . $html->link("Ανανέωση Συμβολαίου για 6 μήνες", "/odikiContracts/renew/" . $vehicle['Vehicle']['odiki_contract_id'] . "/6") . "</p>";
 				echo "<p>" . $html->link("Ανανέωση Συμβολαίου για 12 μήνες", "/odikiContracts/renew/" . $vehicle['Vehicle']['odiki_contract_id'] . "/12") . "</p>";

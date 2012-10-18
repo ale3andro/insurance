@@ -13,14 +13,15 @@
 	<div class="post_body">
 		
 		<?php
-			echo "<p>Ονοματεπώνυμο: " . $vehicle['Vehicle']['first_name'] . "</p>";
+			echo "<p>Ονοματεπώνυμο: " . $vehicle['Vehicle']['first_name'] . " " . $vehicle['Vehicle']['last_name'] . "</p>";
 			echo "<p>Όνομα Πατέρα: " . $vehicle['Vehicle']['father_name'] . "</p>";
 			echo "<p>Αριθμός Πινακίδας: " . $vehicle['Vehicle']['plate'] . "</p>";
 			
 			echo "<p>Διάρκεια Ασφάλισης: από " . $odikiContract['OdikiContract']['from'] . " έως " . 
 							$odikiContract['OdikiContract']['to'] . "</p>";
 			echo "<p>Ποσό ασφαλίστρων: " . $odikiContract['OdikiContract']['amount'] . " &euro;</p>";
-			echo "<p>Ασφαλιστική Εταιρία: " . $odikiCompany['OdikiCompany']['description'] . "</p>";	
+			echo "<p>Ασφαλιστική Εταιρία: " . $odikiCompany['OdikiCompany']['description'] . "</p>";
+			echo "<p>Αριθμός Συμβολαίου: " . $odikiContract['OdikiContract']['contract_number'] . "</p>";
 			echo "<p>" . $html->link("Διόρθωση στοιχείων", "/odikiContracts/edit/" . $vehicle['Vehicle']['odiki_contract_id']) . "</p>";
 			echo "<p>" . $html->link("Ανανέωση Συμβολαίου για 6 μήνες", "/odikiContracts/renew/" . $vehicle['Vehicle']['odiki_contract_id'] . "/6") . "</p>";
 			echo "<p>" . $html->link("Ανανέωση Συμβολαίου για 12 μήνες", "/odikiContracts/renew/" . $vehicle['Vehicle']['odiki_contract_id'] . "/12") . "</p>";

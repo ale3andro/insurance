@@ -18,7 +18,8 @@
 			echo $form->input('from', array('label' => 'Έναρξη Ασφάλειας:'));
 			echo $form->input('to', array('label' => 'Λήξη Ασφάλειας:'));
 			echo $form->input('amount', array('label' => 'Ποσό Ασφάλιστρων:'));
-			echo "Ασφαλιστική Εταιρία:" . $insuranceCompaniesSelect;		
+			echo "Ασφαλιστική Εταιρία:" . $insuranceCompaniesSelect;
+			echo $form->input('contract_number', array('label' => 'Αριθμός Συμβολαίου:'));
 			echo $form->end('Διόρθωση');
 			echo "<br />* Για υποδιαστολή στο πεδίο Ποσό Ασφαλίστρων χρησιμοποιήστε τελεία (.)";
 		?>		

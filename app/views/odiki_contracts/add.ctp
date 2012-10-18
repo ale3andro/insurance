@@ -17,6 +17,7 @@
 			echo $form->input('to', array('label' => 'Λήξη Ασφάλειας:'));
 			echo $form->input('amount', array('label' => 'Ποσό Ασφάλιστρων:'));
 			echo "Ασφαλιστική Εταιρία:" . $odikiCompaniesSelect;
+			echo $form->input('contract_number', array('label' => 'Αριθμός συμβολαίου:'));
 			echo $form->end('Προσθήκη');
 			echo "<br />* Για υποδιαστολή στο πεδίο Ποσό Ασφαλίστρων χρησιμοποιήστε τελεία (.)";
 		?>		

@@ -93,6 +93,7 @@
 		{
 			if (!isset($id))
 				$this->cakeError('error404');
+			
 			$this->InsuranceContract->id = $id;
 			$vehicle = $this->requestAction("/vehicles/getFromInsuranceId/" . $id);
 			if ($vehicle==null)
@@ -120,7 +121,7 @@
 						if ($this->InsuranceContract->save($this->data)) 
 						{		
 							$this->requestAction("/vehicles/setInsuranceContractId/" . $id . "/" . $this->InsuranceContract->id);					
-							$this->flash('Το συμβόλαιο έχει ενημερωθεί...', "/vehicles/view/" . $id, FLASH_TIMEOUT);
+							$this->flash('Το συμβόλαιο έχει ενημερωθεί...', "/vehicles/view/" . $vehicle['Vehicle']['id'], FLASH_TIMEOUT);
 						}
 						break;	
 					case -1: 

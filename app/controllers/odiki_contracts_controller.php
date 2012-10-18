@@ -95,11 +95,11 @@
 		{
 			if (!isset($id))
 				$this->cakeError('error404');
-			
-			$this->InsuranceContract->id = $id;
-			$vehicle = $this->requestAction("/vehicles/getFromOdikiId/" . $id);
-				
+
 			$this->OdikiContract->id = $id;
+			$vehicle = $this->requestAction("/vehicles/getFromOdikiId/" . $id);
+			if ($vehicle==null)
+				$this->cakeError('error404');
 			
 			if (empty($this->data))
 			{
@@ -112,8 +112,6 @@
 			}
 			else
 			{
-				//$this->OdikiContract->save($this->data);
-				//$this->flash('Το συμβόλαιο έχει ενημερωθεί...', "/odikiContracts/view/" . $id, FLASH_TIMEOUT);
 				$dateCheck = $this->checkDates($this->data['OdikiContract']['from'], 
 								$this->data['OdikiContract']['to']);
 				
@@ -125,7 +123,7 @@
 						if ($this->OdikiContract->save($this->data)) 
 						{		
 							$this->requestAction("/vehicles/setOdikiContractId/" . $id . "/" . $this->OdikiContract->id);					
-							$this->flash('Το συμβόλαιο έχει ενημερωθεί...', "/vehicles/view/" . $id, FLASH_TIMEOUT);
+							$this->flash('Το συμβόλαιο έχει ενημερωθεί...', "/vehicles/view/" . $vehicle['Vehicle']['id'], FLASH_TIMEOUT);
 						}
 						break;	
 					case -1: 
