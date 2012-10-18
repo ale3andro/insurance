@@ -11,8 +11,10 @@
 		<div class="clearer">&nbsp;</div>
 
 		<div id="site_title">
-			<h1><a href="<?php echo $html->webroot ?>">Λογιστικό Γραφείο <span>Γ. Μάνθου</span></a></h1>
-			<p>Διαχείριση Ασφαλιστικών Συμβολαίων</p>
+			<h1>
+				<?php echo "<a href=\"" . $html->webroot . "\">" . Configure::read("COMPANY_TITLE") . "</a>"; ?>
+			</h1>
+				<p>Διαχείριση Ασφαλιστικών Συμβολαίων</p>
 		</div>
 
 	</div>

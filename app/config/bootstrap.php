@@ -41,4 +41,14 @@
  *
  */
 //EOF
+	Configure::write('COMPANY_TITLE', 'Γ. Μάνθου - Κ. Ευστρατίου Ο.Ε.');
+	Configure::write('COMPANY_ADDRESS', 'Ιωάννου Καισαρείας & Σινιόσογλου 31');
+	Configure::write('COMPANY_POSTAL_CODE', 'TK 54453');
+	Configure::write('COMPANY_AREA', 'Κάτω Τούμπα');
+	Configure::write('COMPANY_TELEPHONE', 'Τηλ. 2310.902.904');
+	Configure::write('COMPANY_FAX', 'Fax. 2310.914.693');
+	//Configure::write('COMPANY_WEB_ADDRESS', 'http://ale3andro.gr');
+	Configure::write('COMPANY_EMAIL', 'manthu@otenet.gr');
+	
+	Configure::write('PUNCH_LINE', 'Καλώς ορίσατε στην εφαρμογή διαχείρισης ασφαλιστικών συμβολαίων.');
 ?>

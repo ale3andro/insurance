@@ -24,14 +24,24 @@
 						<div class="box_title">Σχετικά</div>
 
 						<div class="box_content">
-							<p style="text-align:center">Λογιστικό - Ασφαλιστικό Γραφείο Γ. Μάνθου</p>
-							<p style="text-align:center">Π. Καρολίδου 25</p>
-							<p style="text-align:center">Τ.Κ. 54453</p>
-							<p style="text-align:center">Κ. Τούμπα - Θεσσαλονίκη</p>
-							<p style="text-align:center">Τηλ. 2310.902904</p>
-							<p style="text-align:center">Fax. 2310.914693</p>
-							<p style="text-align:center"><a href="http://manthu.gr">http://manthu.gr</a></p>
-							<p style="text-align:center"><a href="mailto:manthu@otenet.gr">manthu@otenet.gr</a></p>
+							<?php 
+									if (Configure::read("COMPANY_TITLE")!=null)
+										echo "<p style=\"text-align:center\">" . Configure::read("COMPANY_TITLE") . "</p>";
+									if (Configure::read("COMPANY_ADDRESS")!=null)
+										echo "<p style=\"text-align:center\">" . Configure::read("COMPANY_ADDRESS") . "</p>";
+									if (Configure::read("COMPANY_POSTAL_CODE")!=null)
+										echo "<p style=\"text-align:center\">" . Configure::read("COMPANY_POSTAL_CODE") . "</p>";
+									if (Configure::read("COMPANY_AREA")!=null)
+										echo "<p style=\"text-align:center\">" . Configure::read("COMPANY_AREA") . "</p>";
+									if (Configure::read("COMPANY_TELEPHONE")!=null)
+										echo "<p style=\"text-align:center\">" . Configure::read("COMPANY_TELEPHONE") . "</p>";
+									if (Configure::read("COMPANY_FAX")!=null)
+										echo "<p style=\"text-align:center\">" . Configure::read("COMPANY_FAX") . "</p>";
+									if (Configure::read("COMPANY_WEB_ADDRESS")!=null)
+										echo "<p style=\"text-align:center\"><a target=\"_blank\" href=\"" .Configure::read("COMPANY_WEB_ADDRESS") . "\">" . Configure::read("COMPANY_WEB_ADDRESS") . "</a></p>";
+									if (Configure::read("COMPANY_EMAIL")!=null)
+										echo "<p style=\"text-align:center\"><a href=\"mailto:" . Configure::read("COMPANY_EMAIL") . "\">" . Configure::read("COMPANY_EMAIL") . "</a></p>";
+							?>
 						</div>
 
 					</div>
@@ -112,7 +122,7 @@
 	<div class="center_wrapper">
 
 		<div class="left">
-			<a href="http://creativecommons.org">cc</a> 2009 <a href="http://ale3andro.gr">ale3andro</a> για το <a href="http://manthu.gr">Λογιστικό - Ασφαλιστικό Γραφείο Γ. Μάνθου</a>
+			<a href="http://creativecommons.org">cc</a> 10/2012 <a href="http://ale3andro.gr">Αλέξανδρος Μοσκοφίδης</a>
 		</div>
 		<div class="right">
 			<a href="http://templates.arcsin.se/">Website template</a> by <a href="http://arcsin.se/">Arcsin</a> 

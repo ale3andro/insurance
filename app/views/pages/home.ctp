@@ -9,9 +9,10 @@
 <div class="post">
 	<div class="post_title"><h2>Αρχική Σελίδα</h2></div>
 	<div class="post_body">
-		<p>Καλώς ορίσατε στην εφαρμογή διαχείρισης Ασφαλειών του Λογιστικού-Ασφαλιστικού Γραφείου Γ. Μάνθου </p>
-		<?php 
-			
-		?>
+		<p><?php
+				echo "<h1>" . Configure::read("COMPANY_TITLE") . "</h1>";
+				echo Configure::read("PUNCH_LINE");
+			?>		
+		</p>
 	</div>
 </div>
